@@ -112,56 +112,111 @@ def slugify(text):
     return text.strip('-')
 
 def gerar_cards_servicos(nicho):
-    """Gera HTML dos 3 cards principais de serviços baseado no nicho"""
+    """Gera layout Bento Grid de alta conversão para os serviços"""
     nicho_low = nicho.lower()
     
     if "odonto" in nicho_low:
-        servicos = [
-            ("fa-tooth", "Clareamento & Estética Dental", "Técnicas avançadas para devolver o brilho e a harmonia do seu sorriso."),
-            ("fa-teeth-open", "Implantes & Próteses", "Recupere sua mastigação e autoconfiança com procedimentos seguros e indolores."),
-            ("fa-shield-heart", "Prevenção & Odontologia Geral", "Check-up completo, limpeza profunda e cuidados contínuos para toda a família.")
-        ]
+        s1 = ("fa-tooth", "Clareamento & Estética Dental", "Técnicas modernas para devolver a harmonia, clareza e beleza natural do seu sorriso com total conforto.", ["Procedimento rápido e indolor", "Tecnologia de clareamento a laser", "Planejamento digital do sorriso"])
+        s2 = ("fa-teeth-open", "Implantes & Próteses", "Recupere sua mastigação e autoconfiança com procedimentos seguros e materiais de alto padrão.")
+        s3 = ("fa-shield-heart", "Prevenção & Cuidados Gerais", "Check-up completo, profilaxia detalhada e orientações de saúde bucal para toda a família.")
     elif "estétic" in nicho_low or "beleza" in nicho_low:
-        servicos = [
-            ("fa-wand-magic-sparkles", "Harmonização Facial", "Realce seus traços naturais com procedimentos minimamente invasivos de alta precisão."),
-            ("fa-spa", "Limpeza de Pele Profunda", "Remoção de impurezas, controle de oleosidade e hidratação celular completa."),
-            ("fa-gem", "Tratamentos Corporais", "Tecnologias para redução de medidas, celulite e estímulo de colágeno.")
-        ]
+        s1 = ("fa-wand-magic-sparkles", "Harmonização & Rejuvenescimento", "Realce seus traços e beleza natural com procedimentos minimamente invasivos de alta precisão e segurança.", ["Bioestimuladores de colágeno", "Toxina botulínica e preenchimento", "Resultados elegantes e naturais"])
+        s2 = ("fa-spa", "Limpeza de Pele Profunda", "Desintoxicação dérmica, renovação celular e controle de oleosidade com dermocosméticos selecionados.")
+        s3 = ("fa-gem", "Tecnologia Corporal", "Protocolos avançados para tonificação, redução de medidas e melhora da firmeza corporal.")
+    elif "clinic" in nicho_low or "médic" in nicho_low or "saúde" in nicho_low:
+        s1 = ("fa-stethoscope", "Consultas Médicas & Especialidades", "Avaliação clínica completa com corpo médico experiente, diagnóstico seguro e ambiente acolhedor.", ["Equipe dedicada e atenciosa", "Estrutura moderna e confortável", "Orientações preventivas contínuas"])
+        s2 = ("fa-heart-pulse", "Exames Diagnósticos & Rotina", "Agilidade na realização de procedimentos para você iniciar seu tratamento sem esperas desnecessárias.")
+        s3 = ("fa-user-doctor", "Acompanhamento Terapêutico", "Planos de cuidado contínuo para garantir sua saúde, disposição e qualidade de vida permanente.")
     elif "advoc" in nicho_low or "jurídic" in nicho_low:
-        servicos = [
-            ("fa-scale-balanced", "Direito Civil & Família", "Proteção patrimonial, inventários, divórcios e soluções ágeis para você e sua família."),
-            ("fa-briefcase", "Assessoria Trabalhista", "Defesa técnica de direitos e conformidade com as normas legais vigentes."),
-            ("fa-handshake", "Contratos & Negócios", "Elaboração e análise detalhada para garantir total segurança jurídica.")
-        ]
-    elif "pizz" in nicho_low:
-        servicos = [
-            ("fa-pizza-slice", "Pizzas Tradicionais", "Massa de fermentação lenta com molho de tomate artesanal e ingredientes selecionados."),
-            ("fa-fire", "Especiais do Chef", "Combinações exclusivas assadas no forno a lenha na temperatura ideal."),
-            ("fa-motorcycle", "Delivery Rápido & Quentinho", "Embalagens térmicas especiais para você saborear como se estivesse no salão.")
-        ]
+        s1 = ("fa-scale-balanced", "Direito Civil & Soluções Patrimoniais", "Proteção patrimonial, inventários e soluções ágeis para resguardar a tranquilidade da sua família.", ["Atendimento consultivo especializado", "Defesa técnica de direitos", "Comunicação clara e transparente"])
+        s2 = ("fa-briefcase", "Assessoria Trabalhista", "Conformidade integral com as normas legais e atuação preventiva para seus interesses.")
+        s3 = ("fa-handshake", "Contratos & Negócios", "Elaboração e análise detalhada com cláusulas protetivas personalizadas.")
     else:
-        servicos = [
-            ("fa-star", "Atendimento Personalizado", "Consultoria dedicada para encontrar a solução exata para sua necessidade."),
-            ("fa-award", "Excelência Comprovada", "Anos de experiência e satisfação garantida para nossos clientes."),
-            ("fa-clock-rotate-left", "Agilidade & Pontualidade", "Compromisso rigoroso com seus prazos e atendimento prioritário.")
-        ]
-        
-    html_cards = []
-    for icon, titulo, desc in servicos:
-        html_cards.append(f"""
-        <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-          <div class="w-14 h-14 rounded-2xl bg-[var(--color-100)] text-[var(--color-600)] flex items-center justify-center text-2xl mb-6 shadow-inner">
-            <i class="fa-solid {icon}"></i>
+        s1 = ("fa-star", "Atendimento Personalizado & Sob Medida", "Metodologia exclusiva focada em entregar a melhor solução para sua necessidade.", ["Padrão de qualidade superior", "Atendimento ágil e pontual", "Satisfação garantida"])
+        s2 = ("fa-award", "Profissionais Capacitados", "Equipe experiente e preparada para atender com máxima atenção a você.")
+        s3 = ("fa-clock-rotate-left", "Pontualidade & Compromisso", "Respeito rigoroso aos seus horários e atendimento prioritário via WhatsApp.")
+
+    # Bento Grid HTML
+    bento_html = f"""
+    <!-- Card 1 (Destaque Principal - Bento Grid Span 2) -->
+    <div class="md:col-span-2 bg-gradient-to-br from-white to-gray-50/80 p-8 sm:p-10 rounded-3xl border-2 border-[var(--color-300)] shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+      <div class="absolute top-0 right-0 w-40 h-40 bg-[var(--color-100)] rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+      
+      <div>
+        <div class="flex items-center justify-between gap-4 mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-[var(--color-600)] text-white flex items-center justify-center text-2xl shadow-md">
+            <i class="fa-solid {s1[0]}"></i>
           </div>
-          <h3 class="font-heading font-bold text-xl text-gray-900 mb-3">{titulo}</h3>
-          <p class="text-gray-600 text-sm leading-relaxed mb-6">{desc}</p>
-          <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" class="text-[var(--color-600)] font-semibold text-sm inline-flex items-center gap-2 hover:gap-3 transition-all">
-            <span>Saber mais detalhes</span>
-            <i class="fa-solid fa-arrow-right text-xs"></i>
-          </a>
+          <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-600)] bg-[var(--color-100)] px-3.5 py-1.5 rounded-full border border-[var(--color-200)]">
+            ⭐ Serviço em Alta
+          </span>
         </div>
-        """)
-    return "\n".join(html_cards)
+
+        <h3 class="font-heading font-black text-2xl sm:text-3xl text-gray-900 mb-3">{s1[1]}</h3>
+        <p class="text-gray-600 text-base leading-relaxed mb-6">{s1[2]}</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+          <div class="flex items-center gap-2 text-xs font-semibold text-gray-700 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+            <i class="fa-solid fa-circle-check text-emerald-500"></i>
+            <span>{s1[3][0]}</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-semibold text-gray-700 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+            <i class="fa-solid fa-circle-check text-emerald-500"></i>
+            <span>{s1[3][1]}</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-semibold text-gray-700 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+            <i class="fa-solid fa-circle-check text-emerald-500"></i>
+            <span>{s1[3][2]}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
+        <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" 
+           class="inline-flex items-center gap-2 text-sm font-bold text-white bg-[var(--color-600)] hover:bg-[var(--color-700)] px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all">
+          <i class="fa-brands fa-whatsapp text-emerald-300"></i>
+          <span>Agendar este Procedimento</span>
+        </a>
+        <span class="text-xs text-gray-500 font-medium">Atendimento com hora marcada</span>
+      </div>
+    </div>
+
+    <!-- Card 2 (Bento Grid Col 1) -->
+    <div class="bg-white p-8 rounded-3xl border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded-2xl bg-[var(--color-100)] text-[var(--color-600)] flex items-center justify-center text-xl mb-6 shadow-inner">
+          <i class="fa-solid {s2[0]}"></i>
+        </div>
+        <h3 class="font-heading font-black text-xl text-gray-900 mb-3">{s2[1]}</h3>
+        <p class="text-gray-600 text-sm leading-relaxed mb-6">{s2[2]}</p>
+      </div>
+      <div class="pt-4 border-t border-gray-100">
+        <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" class="text-[var(--color-600)] font-bold text-sm inline-flex items-center gap-2 hover:gap-3 transition-all">
+          <span>Tirar dúvidas pelo WhatsApp</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Card 3 (Bento Grid Col 1) -->
+    <div class="bg-white p-8 rounded-3xl border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded-2xl bg-[var(--color-100)] text-[var(--color-600)] flex items-center justify-center text-xl mb-6 shadow-inner">
+          <i class="fa-solid {s3[0]}"></i>
+        </div>
+        <h3 class="font-heading font-black text-xl text-gray-900 mb-3">{s3[1]}</h3>
+        <p class="text-gray-600 text-sm leading-relaxed mb-6">{s3[2]}</p>
+      </div>
+      <div class="pt-4 border-t border-gray-100">
+        <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" class="text-[var(--color-600)] font-bold text-sm inline-flex items-center gap-2 hover:gap-3 transition-all">
+          <span>Consultar horários</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+    </div>
+    """
+    return bento_html
+
 
 def gerar_hero_section(hero_type, lead, hero_img):
     """
@@ -416,9 +471,11 @@ def gerar_sites(leads):
         # 1. Rotação das 5 Heros
         hero_type = HERO_TYPES[idx % len(HERO_TYPES)]
         
-        # 2. Seleção de Paleta
+        # 2. Seleção de Paleta com variação dinâmica (para que empresas do mesmo nicho não fiquem idênticas)
         nicho_key = nicho.lower()
-        hue = HUE_POR_NICHO.get(nicho_key, 200)
+        base_hue = HUE_POR_NICHO.get(nicho_key, 200)
+        hue_offsets = [0, -25, 20, -15, 30]
+        hue = (base_hue + hue_offsets[idx % len(hue_offsets)]) % 360
         paleta = gerar_paleta_hsl(hue)
         
         # 3. Imagens
@@ -433,6 +490,7 @@ def gerar_sites(leads):
         
         endereco_full = lead.get("endereco", f"{lead.get('bairro', 'Centro')}, {lead.get('cidade', '')}")
         maps_link = f"https://www.google.com/maps/search/?api=1&query={urllib.parse.quote(empresa + ' ' + endereco_full)}"
+        maps_query = urllib.parse.quote(f"{empresa} {endereco_full}")
         
         # 5. Componentes HTML
         hero_html = gerar_hero_section(hero_type, lead, hero_img)
@@ -460,8 +518,10 @@ def gerar_sites(leads):
         html = html.replace("{{AVALIACOES}}", str(lead.get("avaliacoes", "120")))
         html = html.replace("{{WHATSAPP_LINK}}", wa_link)
         html = html.replace("{{MAPS_LINK}}", maps_link)
+        html = html.replace("{{MAPS_QUERY}}", maps_query)
         html = html.replace("{{HERO_IMAGE_URL}}", hero_img)
         html = html.replace("{{SECUNDARIA_IMAGE_URL}}", sec_img)
+
 
         
         # 7. Salvar na pasta específica
@@ -577,7 +637,38 @@ def deploy_cloudflare(project_name="minha-maquina"):
         log(f"⚠️ Erro ao executar wrangler ({e}). Usando URL prevista.")
         return f"https://{project_name}.pages.dev"
 
-def executar_fluxo_completo(project_name="minha-maquina"):
+def deploy_github_pages():
+    """
+    Executa o deploy automático no GitHub Pages via branch gh-pages
+    """
+    log("\n" + "=" * 60)
+    log("🐙 EXECUTANDO DEPLOY NO GITHUB PAGES...")
+    log("=" * 60)
+    
+    try:
+        proc = subprocess.run("git remote get-url origin", shell=True, capture_output=True, encoding="utf-8", errors="replace")
+        origin_url = (proc.stdout or "").strip()
+        
+        match = re.search(r'github\.com[:/]([^/]+)/([^/.]+)(?:\.git)?', origin_url)
+        if match:
+            user = match.group(1)
+            repo = match.group(2)
+            base_url = f"https://{user}.github.io/{repo}"
+        else:
+            base_url = "https://jaimilsonssdev-hue.github.io/sites-e-prospeccao"
+            
+        subprocess.run("git add public/", shell=True, capture_output=True)
+        subprocess.run('git commit -m "deploy: atualiza sites publicos"', shell=True, capture_output=True)
+        
+        push_proc = subprocess.run("git subtree push --prefix public origin gh-pages", shell=True, capture_output=True, encoding="utf-8", errors="replace")
+        log("✅ DEPLOY NO GITHUB PAGES CONCLUÍDO COM SUCESSO!")
+        log(f"🌐 URL Base Publicada: {base_url}")
+        return base_url
+    except Exception as e:
+        log(f"⚠️ Erro ao executar deploy GitHub Pages ({e})")
+        return "https://jaimilsonssdev-hue.github.io/sites-e-prospeccao"
+
+def executar_fluxo_completo(project_name="minha-maquina", metodo="github"):
     """
     Orquestra a leitura dos leads, geração dos sites e deploy
     """
@@ -586,7 +677,11 @@ def executar_fluxo_completo(project_name="minha-maquina"):
         return []
         
     leads_com_site = gerar_sites(leads)
-    base_url = deploy_cloudflare(project_name)
+    
+    if metodo == "github":
+        base_url = deploy_github_pages()
+    else:
+        base_url = deploy_cloudflare(project_name)
     
     # Adicionar URL final aos leads
     for lead in leads_com_site:
@@ -597,12 +692,13 @@ def executar_fluxo_completo(project_name="minha-maquina"):
         json.dump(leads_com_site, f, ensure_ascii=False, indent=2)
         
     log("\n" + "=" * 60)
-    log(f"🎯 TODOS OS SITES ESTÃO PRONTOS!")
+    log("🎯 TODOS OS SITES ESTÃO PRONTOS!")
     for l in leads_com_site:
         log(f"  • {l['empresa']}: {l['url_publicada']}")
     log("=" * 60)
     
     return leads_com_site
+
 
 if __name__ == "__main__":
     executar_fluxo_completo()

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Implantes & Estética Vila Nova | Odontologia em Vila Nova, São Paulo, SP</title>
+  <meta name="description" content="Implantes & Estética Vila Nova - Conheça nossos serviços de excelência em Vila Nova, São Paulo, SP. Atendimento rápido e personalizado via WhatsApp.">
+  
+  <!-- Google Fonts: Poppins & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: 'var(--color-100)',
+              100: 'var(--color-200)',
+              200: 'var(--color-300)',
+              300: 'var(--color-400)',
+              400: 'var(--color-500)',
+              500: 'var(--color-600)',
+              600: 'var(--color-600)',
+              700: 'var(--color-700)',
+              800: 'var(--color-800)',
+              900: 'var(--color-900)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --hue: 195;
+      --color-900: hsl(195, 75%, 15%);
+      --color-800: hsl(195, 75%, 25%);
+      --color-700: hsl(195, 75%, 35%);
+      --color-600: hsl(195, 75%, 45%);
+      --color-500: hsl(195, 75%, 55%);
+      --color-400: hsl(195, 75%, 65%);
+      --color-300: hsl(195, 75%, 75%);
+      --color-200: hsl(195, 75%, 85%);
+      --color-100: hsl(195, 75%, 95%);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1d1d1f;
+      background-color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Asymmetric Hero Clip Path */
+    .clip-asymmetric {
+      clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+    }
+    @media (max-width: 768px) {
+      .clip-asymmetric {
+        clip-path: none;
+      }
+    }
+
+    /* Floating WhatsApp Pulse */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 0.4; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .pulse-animation {
+      animation: pulse-ring 2.5s infinite ease-in-out;
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- 1. BARRA UTILITÁRIA SUPERIOR -->
+  <div class="bg-[var(--color-900)] text-white text-xs py-2 px-4 border-b border-[var(--color-800)]">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1.5 opacity-90">
+          <i class="fa-solid fa-location-dot text-[var(--color-400)]"></i>
+          <span>Vila Nova, São Paulo, SP</span>
+        </span>
+        <span class="hidden sm:inline-block text-white/30">|</span>
+        <span class="hidden sm:flex items-center gap-1.5 opacity-90">
+          <i class="fa-solid fa-clock text-[var(--color-400)]"></i>
+          <span>Atendimento Hoje: Aberto</span>
+        </span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="https://www.google.com/maps/search/?api=1&query=Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20Av.%20Principal%2C%20300%20-%20Vila%20Nova%2C%20S%C3%A3o%20Paulo%2C%20SP" target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1 text-white/90 hover:text-white">
+          <i class="fa-brands fa-google text-[var(--color-300)]"></i>
+          <span>Ver no Google Maps</span>
+        </a>
+        <a href="https://wa.me/5511982744238?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener noreferrer" class="font-semibold text-[var(--color-300)] hover:text-white flex items-center gap-1">
+          <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i>
+          <span>(11) 98274-4238</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. NAVBAR PRINCIPAL STICKY -->
+  <header class="sticky top-0 z-40 glass-effect border-b border-gray-100 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[var(--color-600)] text-white flex items-center justify-center font-bold text-xl shadow-md">
+          <i class="fa-solid fa-store"></i>
+        </div>
+        <div>
+          <span class="font-heading font-bold text-xl tracking-tight text-gray-900 block leading-tight">Implantes & Estética Vila Nova</span>
+          <span class="text-xs text-[var(--color-600)] font-medium tracking-wide uppercase">Odontologia</span>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+        <a href="#sobre" class="hover:text-[var(--color-600)] transition-colors">Sobre</a>
+        <a href="#servicos" class="hover:text-[var(--color-600)] transition-colors">Serviços</a>
+        <a href="#diferenciais" class="hover:text-[var(--color-600)] transition-colors">Diferenciais</a>
+        <a href="#avaliacoes" class="hover:text-[var(--color-600)] transition-colors">Avaliações</a>
+        <a href="#contato" class="hover:text-[var(--color-600)] transition-colors">Contato</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/5511982744238?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener noreferrer" 
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5">
+          <i class="fa-brands fa-whatsapp text-lg"></i>
+          <span>Fale Conosco</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3. SEÇÃO HERO DINÂMICA (SUPOSTA PELAS 5 ARQUITETURAS DO KIT) -->
+  
+        <section class="relative min-h-[580px] flex items-center bg-gray-900 text-white overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80" alt="Implantes & Estética Vila Nova" class="absolute inset-0 w-full h-full object-cover opacity-35 filter brightness-75">
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-900)] via-black/60 to-transparent"></div>
+          
+          <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
+            <div class="max-w-3xl">
+              <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-wider mb-6">
+                ⭐ 4.8 Estrelas no Google Maps (134 avaliações)
+              </span>
+              <h1 class="font-heading text-4xl sm:text-6xl font-black tracking-tight leading-tight drop-shadow-md">
+                Implantes & Estética Vila Nova
+              </h1>
+              <p class="mt-5 text-xl text-white/90 leading-relaxed max-w-2xl drop-shadow">
+                Especialistas dedicados em Odontologia trazendo conforto, segurança e resultados de primeiro nível em Vila Nova, São Paulo, SP.
+              </p>
+              <div class="mt-10 flex flex-wrap gap-4">
+                <a href="https://wa.me/5511982744238?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" 
+                   class="px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-base shadow-2xl transition-all flex items-center gap-3">
+                  <i class="fa-brands fa-whatsapp text-xl"></i>
+                  <span>Falar com Atendente Online</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+
+  <!-- 4. FAIXA DE AGENDAMENTO RÁPIDO -->
+  <section class="bg-gray-50 border-y border-gray-200/80 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3 text-gray-800 text-center md:text-left">
+          <div class="w-10 h-10 rounded-full bg-[var(--color-100)] text-[var(--color-600)] flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-bolt text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-heading font-semibold text-sm sm:text-base">Precisa de atendimento imediato em Vila Nova?</h4>
+            <p class="text-xs sm:text-sm text-gray-500">Tire suas dúvidas ou solicite um orçamento direto pelo WhatsApp sem burocracia.</p>
+          </div>
+        </div>
+        <a href="https://wa.me/5511982744238?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener noreferrer" 
+           class="w-full md:w-auto text-center px-6 py-3 rounded-xl bg-[var(--color-600)] hover:bg-[var(--color-700)] text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all">
+          Solicitar Atendimento Direto
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. FLUXO DE 4 PASSOS ("COMO FUNCIONA") -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-600)] bg-[var(--color-100)] px-3 py-1 rounded-full">Passo a Passo</span>
+        <h2 class="font-heading text-3xl font-extrabold text-gray-900 mt-3">Como é o nosso atendimento</h2>
+        <p class="text-gray-600 mt-2 text-sm sm:text-base">Do primeiro contato até a solução completa do que você precisa.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+        <!-- Passo 1 -->
+        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:border-[var(--color-400)] transition-all relative group hover:shadow-md">
+          <div class="text-3xl font-black text-gray-200 group-hover:text-[var(--color-200)] transition-colors mb-3">01</div>
+          <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-[var(--color-600)] text-xl mb-4 border border-gray-100">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <h3 class="font-heading font-bold text-gray-900 text-lg mb-2">Contato Rápido</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Você clica no botão e fala diretamente com a equipe via WhatsApp em Vila Nova.</p>
+        </div>
+
+        <!-- Passo 2 -->
+        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:border-[var(--color-400)] transition-all relative group hover:shadow-md">
+          <div class="text-3xl font-black text-gray-200 group-hover:text-[var(--color-200)] transition-colors mb-3">02</div>
+          <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-[var(--color-600)] text-xl mb-4 border border-gray-100">
+            <i class="fa-solid fa-clipboard-list"></i>
+          </div>
+          <h3 class="font-heading font-bold text-gray-900 text-lg mb-2">Diagnóstico Preciso</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Entendemos detalhadamente o que você precisa para apresentar a melhor solução.</p>
+        </div>
+
+        <!-- Passo 3 -->
+        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:border-[var(--color-400)] transition-all relative group hover:shadow-md">
+          <div class="text-3xl font-black text-gray-200 group-hover:text-[var(--color-200)] transition-colors mb-3">03</div>
+          <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-[var(--color-600)] text-xl mb-4 border border-gray-100">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+          </div>
+          <h3 class="font-heading font-bold text-gray-900 text-lg mb-2">Proposta Clara</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Transparência total nos valores, prazos e condições sem taxas ocultas.</p>
+        </div>
+
+        <!-- Passo 4 -->
+        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:border-[var(--color-400)] transition-all relative group hover:shadow-md">
+          <div class="text-3xl font-black text-gray-200 group-hover:text-[var(--color-200)] transition-colors mb-3">04</div>
+          <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-[var(--color-600)] text-xl mb-4 border border-gray-100">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h3 class="font-heading font-bold text-gray-900 text-lg mb-2">Execução Garantida</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Serviço de alto padrão realizado com máxima eficiência e satisfação garantida.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. PRODUTOS E SERVIÇOS -->
+  <section id="servicos" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-600)] bg-[var(--color-100)] px-3 py-1 rounded-full">Nossos Serviços</span>
+        <h2 class="font-heading text-3xl font-extrabold text-gray-900 mt-3">Especialidades de Implantes & Estética Vila Nova</h2>
+        <p class="text-gray-600 mt-2 text-sm sm:text-base">Confira as principais soluções que preparamos especialmente para nossos clientes.</p>
+      </div>
+
+      <!-- CARDS INJETADOS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-[var(--color-100)] text-[var(--color-600)] flex items-center justify-center text-2xl mb-6 shadow-inner">
+            <i class="fa-solid fa-tooth"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-gray-900 mb-3">Clareamento & Estética Dental</h3>
+          <p class="text-gray-600 text-sm leading-relaxed mb-6">Técnicas avançadas para devolver o brilho e a harmonia do seu sorriso.</p>
+          <a href="https://wa.me/5511982744238?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" class="text-[var(--color-600)] font-semibold text-sm inline-flex items-center gap-2 hover:gap-3 transition-all">
+            <span>Saber mais detalhes</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+        
+
+        <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-[var(--color-100)] text-[var(--color-600)] flex items-center justify-center text-2xl mb-6 shadow-inner">
+            <i class="fa-solid fa-teeth-open"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-gray-900 mb-3">Implantes & Próteses</h3>
+          <p class="text-gray-600 text-sm leading-relaxed mb-6">Recupere sua mastigação e autoconfiança com procedimentos seguros e indolores.</p>
+          <a href="https://wa.me/5511982744238?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" class="text-[var(--color-600)] font-semibold text-sm inline-flex items-center gap-2 hover:gap-3 transition-all">
+            <span>Saber mais detalhes</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+        
+
+        <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-[var(--color-100)] text-[var(--color-600)] flex items-center justify-center text-2xl mb-6 shadow-inner">
+            <i class="fa-solid fa-shield-heart"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-gray-900 mb-3">Prevenção & Odontologia Geral</h3>
+          <p class="text-gray-600 text-sm leading-relaxed mb-6">Check-up completo, limpeza profunda e cuidados contínuos para toda a família.</p>
+          <a href="https://wa.me/5511982744238?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" class="text-[var(--color-600)] font-semibold text-sm inline-flex items-center gap-2 hover:gap-3 transition-all">
+            <span>Saber mais detalhes</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. DIFERENCIAIS ("POR QUE NÓS") -->
+  <section id="diferenciais" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-600)] bg-[var(--color-100)] px-3 py-1 rounded-full">Diferenciais</span>
+          <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-gray-900 mt-4 leading-tight">
+            Por que somos referência em Odontologia em São Paulo, SP
+          </h2>
+          <p class="text-gray-600 mt-4 text-base leading-relaxed">
+            Nosso compromisso é entregar excelência com foco na satisfação e no conforto de quem nos procura no bairro Vila Nova e região.
+          </p>
+
+          <div class="mt-8 space-y-4">
+            <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100">
+              <div class="w-10 h-10 rounded-lg bg-[var(--color-600)] text-white flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-award text-lg"></i>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-gray-900 text-base">Qualidade e Compromisso</h4>
+                <p class="text-gray-600 text-sm mt-1">Materiais e processos rigorosos para entregar os melhores resultados.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100">
+              <div class="w-10 h-10 rounded-lg bg-[var(--color-600)] text-white flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-headset text-lg"></i>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-gray-900 text-base">Atendimento Humanizado</h4>
+                <p class="text-gray-600 text-sm mt-1">Equipe prestativa, pronta para ouvir e atender às suas necessidades.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100">
+              <div class="w-10 h-10 rounded-lg bg-[var(--color-600)] text-white flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-shield-halved text-lg"></i>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-gray-900 text-base">Localização Acessível</h4>
+                <p class="text-gray-600 text-sm mt-1">Ponto estratégico em Vila Nova para facilitar sua visita e rotina.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=800&q=80" alt="Implantes & Estética Vila Nova Local" class="w-full h-[450px] object-cover">
+          </div>
+          <div class="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-500 flex items-center justify-center text-2xl font-bold">
+              ★
+            </div>
+            <div>
+              <div class="font-heading font-black text-2xl text-gray-900 leading-tight">4.8 / 5.0</div>
+              <div class="text-xs text-gray-500">Com base em 134 avaliações reais</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. PROVA SOCIAL (AVALIAÇÕES REAIS GOOGLE) -->
+  <section id="avaliacoes" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-600)] bg-[var(--color-100)] px-3 py-1 rounded-full">Depoimentos</span>
+        <h2 class="font-heading text-3xl font-extrabold text-gray-900 mt-3">O que os clientes dizem no Google</h2>
+        <div class="flex items-center justify-center gap-2 mt-3 text-amber-400 text-lg">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <span class="text-gray-700 text-sm font-semibold ml-2">4.8 estrelas (134 avaliações verificadas)</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Depoimento 1 -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">
+                M
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-sm text-gray-900">Mariana Silva</h4>
+                <span class="text-xs text-gray-400">Cliente Verificado</span>
+              </div>
+            </div>
+            <i class="fa-brands fa-google text-gray-300 text-xl"></i>
+          </div>
+          <div class="text-amber-400 text-xs mb-2">★★★★★</div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            "Excelente experiência! Atendimento pontual e muito educado. A equipe da Implantes & Estética Vila Nova superou todas as minhas expectativas aqui no bairro Vila Nova."
+          </p>
+        </div>
+
+        <!-- Depoimento 2 -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center">
+                R
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-sm text-gray-900">Rodrigo Costa</h4>
+                <span class="text-xs text-gray-400">Cliente Verificado</span>
+              </div>
+            </div>
+            <i class="fa-brands fa-google text-gray-300 text-xl"></i>
+          </div>
+          <div class="text-amber-400 text-xs mb-2">★★★★★</div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            "Profissionais de altíssimo nível. O contato pelo WhatsApp foi imediato e resolveram tudo com agilidade e clareza. Recomendo de olhos fechados!"
+          </p>
+        </div>
+
+        <!-- Depoimento 3 -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center">
+                C
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-sm text-gray-900">Camila Andrade</h4>
+                <span class="text-xs text-gray-400">Cliente Verificado</span>
+              </div>
+            </div>
+            <i class="fa-brands fa-google text-gray-300 text-xl"></i>
+          </div>
+          <div class="text-amber-400 text-xs mb-2">★★★★★</div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            "Melhor atendimento da região de São Paulo, SP. Sempre prestativos e com preços justos. Vale cada centavo pela tranquilidade que proporcionam."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. LOCALIZAÇÃO E CONTATO -->
+  <section id="contato" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-[var(--color-900)] rounded-3xl text-white overflow-hidden shadow-2xl">
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+          <div class="p-8 sm:p-12 lg:p-16 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-300)] bg-white/10 px-3 py-1 rounded-full">Fale Conosco</span>
+              <h2 class="font-heading text-3xl sm:text-4xl font-extrabold mt-4 leading-tight">
+                Venha nos visitar ou mande uma mensagem
+              </h2>
+              <p class="text-white/80 mt-4 text-sm sm:text-base leading-relaxed">
+                Estamos localizados em Vila Nova, prontos para lhe atender com todo o cuidado e atenção que você merece em São Paulo, SP.
+              </p>
+
+              <div class="mt-8 space-y-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-location-dot text-[var(--color-300)]"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs text-white/60">Endereço</div>
+                    <div class="font-medium text-sm">Av. Principal, 300 - Vila Nova, São Paulo, SP</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                    <i class="fa-brands fa-whatsapp text-emerald-400 text-lg"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs text-white/60">WhatsApp Direto</div>
+                    <div class="font-medium text-sm">(11) 98274-4238</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-10">
+              <a href="https://wa.me/5511982744238?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener noreferrer" 
+                 class="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-base shadow-lg hover:shadow-xl transition-all">
+                <i class="fa-brands fa-whatsapp text-xl"></i>
+                <span>Iniciar Conversa no WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="bg-white/5 p-8 sm:p-12 border-t lg:border-t-0 lg:border-l border-white/10 flex flex-col justify-center items-center text-center">
+            <div class="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center text-4xl text-[var(--color-300)] mb-6 shadow-inner">
+              <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <h3 class="font-heading font-bold text-2xl mb-2">Fácil Acesso em Vila Nova</h3>
+            <p class="text-white/70 text-sm max-w-sm mb-8">
+              Clique abaixo para abrir as rotas diretamente no aplicativo do Google Maps no seu celular ou computador.
+            </p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20Av.%20Principal%2C%20300%20-%20Vila%20Nova%2C%20S%C3%A3o%20Paulo%2C%20SP" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 transition-colors">
+              <i class="fa-brands fa-google"></i>
+              <span>Abrir Rota no Google Maps</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. FOOTER -->
+  <footer class="bg-gray-950 text-white/60 text-xs py-10 border-t border-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-white font-heading font-semibold text-sm">
+        <div class="w-6 h-6 rounded bg-[var(--color-600)] flex items-center justify-center text-xs">
+          <i class="fa-solid fa-store"></i>
+        </div>
+        <span>Implantes & Estética Vila Nova</span>
+      </div>
+      <div>
+        © <span id="year"></span> Implantes & Estética Vila Nova. Todos os direitos reservados.
+      </div>
+      <div class="text-white/40 text-[11px]">
+        Desenvolvido com tecnologia de alta conversão
+      </div>
+    </div>
+  </footer>
+
+  <!-- 11. BOTÃO FLUTUANTE WHATSAPP -->
+  <a href="https://wa.me/5511982744238?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Implantes%20%26%20Est%C3%A9tica%20Vila%20Nova%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener noreferrer" 
+     class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white p-4 sm:px-5 sm:py-3.5 rounded-full shadow-2xl hover:scale-105 transition-all duration-300 group"
+     aria-label="Falar no WhatsApp">
+    <div class="relative flex items-center justify-center">
+      <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 pulse-animation"></span>
+      <i class="fa-brands fa-whatsapp text-2xl relative"></i>
+    </div>
+    <span class="hidden sm:inline-block font-heading font-semibold text-sm">Atendimento Online</span>
+  </a>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+

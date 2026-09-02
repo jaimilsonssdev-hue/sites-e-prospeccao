@@ -1,0 +1,28 @@
+{
+  "name": "maquina-de-sites",
+  "version": "1.0.0",
+  "description": "Automação de criação e publicação em massa de Landing Pages para prospecção comercial",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "wrangler pages deploy public --project-name=minha-maquina",
+    "online": "python publicar_online.py",
+    "pages:dev": "wrangler pages dev public",
+    "prospeccao": "python prospeccao.py",
+    "gerar": "python gerador_e_deploy.py",
+    "painel": "python painel_vendas.py"
+
+  },
+  "keywords": [
+    "cloudflare-pages",
+    "wrangler",
+    "automacao",
+    "landing-pages",
+    "prospeccao"
+  ],
+  "author": "Máquina de Sites",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.114.0"
+  }
+}
+

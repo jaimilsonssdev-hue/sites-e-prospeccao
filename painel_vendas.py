@@ -171,6 +171,7 @@ def main():
     parser.add_argument("--cidade", type=str, default="São Paulo, SP", help="Cidade alvo (ex: São Paulo, SP, Belo Horizonte, MG)")
     parser.add_argument("--qtd", type=int, default=5, help="Quantidade de leads a prospectar")
     parser.add_argument("--projeto", type=str, default="minha-maquina", help="Nome do projeto Cloudflare Pages")
+    parser.add_argument("--metodo", type=str, default="github", choices=["github", "cloudflare"], help="Método de deploy: github (Pages) ou cloudflare")
     parser.add_argument("--jina-key", type=str, default=None, help="Chave de API Jina AI (opcional)")
     
     args = parser.parse_args()
@@ -189,8 +190,10 @@ def main():
         sys.exit(1)
         
     # 2. Etapa de Geração e Deploy
-    print(f"\n📍 ETAPA 2/3: GERAÇÃO DOS SITES & DEPLOY NO CLOUDFLARE PAGES")
-    leads_publicados = gerador_e_deploy.executar_fluxo_completo(project_name=args.projeto)
+    metodo_nome = "GitHub Pages" if args.metodo == "github" else "Cloudflare Pages"
+    print(f"\n📍 ETAPA 2/3: GERAÇÃO DOS SITES & DEPLOY NO {metodo_nome.upper()}")
+    leads_publicados = gerador_e_deploy.executar_fluxo_completo(project_name=args.projeto, metodo=args.metodo)
+
     
     if not leads_publicados:
         print("❌ Falha na geração dos sites.")

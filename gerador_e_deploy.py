@@ -23,6 +23,7 @@ import json
 import shutil
 import subprocess
 import urllib.parse
+import html as html_lib
 from datetime import datetime
 from pathlib import Path
 
@@ -423,15 +424,15 @@ def carregar_leads():
             reader = csv.DictReader(f)
             for row in reader:
                 leads.append({
-                    "empresa": row.get("empresa", "Empresa"),
-                    "nicho": row.get("especialidade", "Geral").capitalize(),
+                    "empresa": row.get("empresa", ""),
+                    "nicho": row.get("especialidade", ""),
                     "cidade": "São Paulo, SP",
                     "bairro": "Centro",
-                    "endereco": row.get("endereco", "Centro"),
-                    "telefone_whatsapp": row.get("telefone", "5511987654321"),
-                    "telefone_formatado": "(11) 98765-4321",
-                    "nota": row.get("nota", "4.9"),
-                    "avaliacoes": row.get("avaliacoes", "120")
+                    "endereco": row.get("endereco", ""),
+                    "telefone_whatsapp": row.get("telefone", ""),
+                    "telefone_formatado": row.get("telefone_formatado", ""),
+                    "nota": row.get("nota", ""),
+                    "avaliacoes": row.get("avaliacoes", "")
                 })
         log(f"✓ Carregados {len(leads)} leads de fallback ({csv_file.name})")
         return leads
@@ -464,6 +465,13 @@ def gerar_sites(leads):
     log("=" * 60)
 
     for idx, lead in enumerate(leads):
+        obrigatorios = ("empresa", "nicho", "cidade", "endereco", "telefone_whatsapp", "telefone_formatado", "nota", "avaliacoes")
+        ausentes = [campo for campo in obrigatorios if not str(lead.get(campo, "")).strip()]
+        if ausentes:
+            log(f"[ignorado] Lead sem dados verificados: {', '.join(ausentes)}")
+            continue
+        # Todo conteúdo da empresa é externo e deve ser escapado antes de entrar no HTML.
+        lead = {chave: html_lib.escape(str(valor), quote=True) if isinstance(valor, str) else valor for chave, valor in lead.items()}
         empresa = lead["empresa"]
         nicho = lead.get("nicho", "Geral")
         slug = slugify(empresa)
@@ -484,11 +492,11 @@ def gerar_sites(leads):
         sec_img = img_pack["secundaria"]
         
         # 4. Links WhatsApp e Google Maps
-        tel_wa = lead.get("telefone_whatsapp", "5511987654321")
+        tel_wa = lead["telefone_whatsapp"]
         msg_wa = urllib.parse.quote(f"Olá! Vim pelo site da {empresa} e gostaria de mais informações.")
         wa_link = f"https://wa.me/{tel_wa}?text={msg_wa}"
         
-        endereco_full = lead.get("endereco", f"{lead.get('bairro', 'Centro')}, {lead.get('cidade', '')}")
+        endereco_full = lead["endereco"]
         maps_link = f"https://www.google.com/maps/search/?api=1&query={urllib.parse.quote(empresa + ' ' + endereco_full)}"
         maps_query = urllib.parse.quote(f"{empresa} {endereco_full}")
         
@@ -509,13 +517,13 @@ def gerar_sites(leads):
             
         html = html.replace("{{NOME_EMPRESA}}", empresa)
         html = html.replace("{{NICHO}}", nicho)
-        html = html.replace("{{BAIRRO}}", lead.get("bairro", "Centro"))
+        html = html.replace("{{BAIRRO}}", lead.get("bairro") or lead["cidade"])
         html = html.replace("{{CIDADE}}", lead.get("cidade", ""))
         html = html.replace("{{ENDERECO_COMPLETO}}", endereco_full)
         html = html.replace("{{TELEFONE}}", tel_wa)
         html = html.replace("{{TELEFONE_FORMATADO}}", lead.get("telefone_formatado", tel_wa))
-        html = html.replace("{{NOTA}}", str(lead.get("nota", "4.9")))
-        html = html.replace("{{AVALIACOES}}", str(lead.get("avaliacoes", "120")))
+        html = html.replace("{{NOTA}}", str(lead["nota"]))
+        html = html.replace("{{AVALIACOES}}", str(lead["avaliacoes"]))
         html = html.replace("{{WHATSAPP_LINK}}", wa_link)
         html = html.replace("{{MAPS_LINK}}", maps_link)
         html = html.replace("{{MAPS_QUERY}}", maps_query)
@@ -616,6 +624,8 @@ def deploy_cloudflare(project_name="minha-maquina"):
             log(f"🌐 URL Base Publicada: {base_url}")
             return base_url
         elif process.returncode == 0:
+            # Sem URL retornada pelo provedor, não há publicação verificável.
+            return None
             base_url = f"https://{project_name}.pages.dev"
             log(f"✅ DEPLOY CONCLUÍDO!")
             log(f"🌐 URL Base: {base_url}")
@@ -655,12 +665,15 @@ def deploy_github_pages():
             repo = match.group(2)
             base_url = f"https://{user}.github.io/{repo}"
         else:
+            return None
             base_url = "https://jaimilsonssdev-hue.github.io/sites-e-prospeccao"
             
         subprocess.run("git add public/", shell=True, capture_output=True)
         subprocess.run('git commit -m "deploy: atualiza sites publicos"', shell=True, capture_output=True)
         
         push_proc = subprocess.run("git subtree push --prefix public origin gh-pages", shell=True, capture_output=True, encoding="utf-8", errors="replace")
+        if push_proc.returncode != 0:
+            return None
         log("✅ DEPLOY NO GITHUB PAGES CONCLUÍDO COM SUCESSO!")
         log(f"🌐 URL Base Publicada: {base_url}")
         return base_url
@@ -702,4 +715,3 @@ def executar_fluxo_completo(project_name="minha-maquina", metodo="github"):
 
 if __name__ == "__main__":
     executar_fluxo_completo()
-

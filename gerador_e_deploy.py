@@ -45,28 +45,80 @@ HERO_TYPES = [
 # Paletas de cores HUE base por nicho
 HUE_POR_NICHO = {
     "odontologia": 195,  # Teal / Ciano médico
+    "clinica": 205,      # Azul saúde confiança
     "estética": 335,     # Rose / Pink sofisticado
+    "psicologia": 170,   # Verde sálvia equilíbrio
+    "salao": 320,        # Magenta / Pink
+    "barbearia": 35,     # Ocre / Dark vintage
     "advocacia": 275,    # Purple / Índigo formal
+    "contabilidade": 220,# Azul corporativo
+    "imobiliária": 210,  # Azul imobiliário
+    "veterinária": 155,  # Verde natureza / Pet
+    "academia": 12,      # Vermelho / Laranja energia
+    "oficina": 25,       # Âmbar / Laranja mecânico
+    "loja": 260,         # Roxo moderno
     "restaurante": 28,   # Laranja apetitoso
     "pizzaria": 15,      # Vermelho / Terracota
-    "veterinária": 155,  # Verde natureza / Pet
-    "imobiliária": 210,  # Azul confiança
+    "hamburgueria": 20,  # Vermelho burguer
+    "cafeteria": 30,     # Café caramelo
+    "arquitetura": 220,  # Cinza ardósia / Azul
+    "fisioterapia": 180, # Turquesa bem-estar
     "geral": 200         # Azul corporativo
 }
 
-# Imagens de alta conversão no Unsplash por nicho
+# Imagens de alta conversão no Unsplash por nicho (curadoria comercial profissional)
 IMAGENS_NICHO = {
     "odontologia": {
         "hero": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=800&q=80"
     },
+    "clinica": {
+        "hero": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80"
+    },
     "estética": {
         "hero": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1512290900672-1f5be1c6e1c8?auto=format&fit=crop&w=800&q=80"
     },
+    "psicologia": {
+        "hero": "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80"
+    },
+    "salao": {
+        "hero": "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=800&q=80"
+    },
+    "barbearia": {
+        "hero": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80"
+    },
     "advocacia": {
         "hero": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80"
+    },
+    "contabilidade": {
+        "hero": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80"
+    },
+    "imobiliaria": {
+        "hero": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+    },
+    "veterinaria": {
+        "hero": "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=800&q=80"
+    },
+    "academia": {
+        "hero": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80"
+    },
+    "oficina": {
+        "hero": "https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80"
+    },
+    "loja": {
+        "hero": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=800&q=80"
     },
     "restaurante": {
         "hero": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
@@ -76,11 +128,72 @@ IMAGENS_NICHO = {
         "hero": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80"
     },
+    "hamburgueria": {
+        "hero": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
+    },
+    "cafeteria": {
+        "hero": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80"
+    },
+    "arquitetura": {
+        "hero": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80"
+    },
+    "fisioterapia": {
+        "hero": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80"
+    },
     "geral": {
         "hero": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80"
     }
 }
+
+def obter_imagens_nicho(nicho: str, empresa: str = "") -> dict:
+    """Retorna imagens profissionais de alta conversão para o nicho correto, evitando escritórios genéricos."""
+    texto = f"{nicho} {empresa}".lower()
+    
+    if any(k in texto for k in ["odonto", "dent", "sorris", "dente"]):
+        return IMAGENS_NICHO["odontologia"]
+    elif any(k in texto for k in ["estet", "belez", "dermat", "pele", "corpo", "harmoniz"]):
+        return IMAGENS_NICHO["estética"]
+    elif any(k in texto for k in ["clinic", "medic", "saud", "hospital", "policlinic", "cemed", "prevclin"]):
+        return IMAGENS_NICHO["clinica"]
+    elif any(k in texto for k in ["psico", "terap", "mente", "emocional"]):
+        return IMAGENS_NICHO["psicologia"]
+    elif any(k in texto for k in ["salao", "cabel", "visagis", "hair"]):
+        return IMAGENS_NICHO["salao"]
+    elif any(k in texto for k in ["barb"]):
+        return IMAGENS_NICHO["barbearia"]
+    elif any(k in texto for k in ["advoc", "jurid", "direito", "lei"]):
+        return IMAGENS_NICHO["advocacia"]
+    elif any(k in texto for k in ["contab", "financ", "fiscal"]):
+        return IMAGENS_NICHO["contabilidade"]
+    elif any(k in texto for k in ["imob", "corret", "imove"]):
+        return IMAGENS_NICHO["imobiliaria"]
+    elif any(k in texto for k in ["vet", "pet", "animal"]):
+        return IMAGENS_NICHO["veterinaria"]
+    elif any(k in texto for k in ["acad", "fit", "cross", "trein", "muscul"]):
+        return IMAGENS_NICHO["academia"]
+    elif any(k in texto for k in ["oficin", "mecan", "auto", "pneu", "carro", "veic"]):
+        return IMAGENS_NICHO["oficina"]
+    elif any(k in texto for k in ["loj", "varej", "boutiq", "calc", "roup", "otic", "moda"]):
+        return IMAGENS_NICHO["loja"]
+    elif any(k in texto for k in ["pizz"]):
+        return IMAGENS_NICHO["pizzaria"]
+    elif any(k in texto for k in ["burg", "hamburg"]):
+        return IMAGENS_NICHO["hamburgueria"]
+    elif any(k in texto for k in ["restaur", "gastro", "bistr", "comida", "buffet"]):
+        return IMAGENS_NICHO["restaurante"]
+    elif any(k in texto for k in ["caf", "confeit", "padar", "docer"]):
+        return IMAGENS_NICHO["cafeteria"]
+    elif any(k in texto for k in ["arquit", "engenh", "decor", "design"]):
+        return IMAGENS_NICHO["arquitetura"]
+    elif any(k in texto for k in ["fisio", "pilat", "quiro"]):
+        return IMAGENS_NICHO["fisioterapia"]
+    
+    return IMAGENS_NICHO["geral"]
 
 def log(msg):
     ts = datetime.now().strftime("%H:%M:%S")
@@ -481,15 +594,30 @@ def gerar_sites(leads):
         
         # 2. Seleção de Paleta com variação dinâmica (para que empresas do mesmo nicho não fiquem idênticas)
         nicho_key = nicho.lower()
-        base_hue = HUE_POR_NICHO.get(nicho_key, 200)
+        base_hue = HUE_POR_NICHO.get(nicho_key)
+        if base_hue is None:
+            if any(k in nicho_key for k in ["clinic", "medic", "saud", "hospital"]):
+                base_hue = HUE_POR_NICHO["clinica"]
+            elif any(k in nicho_key for k in ["estet", "belez"]):
+                base_hue = HUE_POR_NICHO["estética"]
+            else:
+                base_hue = 200
         hue_offsets = [0, -25, 20, -15, 30]
         hue = (base_hue + hue_offsets[idx % len(hue_offsets)]) % 360
         paleta = gerar_paleta_hsl(hue)
         
-        # 3. Imagens
-        img_pack = IMAGENS_NICHO.get(nicho_key, IMAGENS_NICHO["geral"])
-        hero_img = img_pack["hero"]
-        sec_img = img_pack["secundaria"]
+        # 3. Imagens (prioriza fotos REAIS autênticas do Google Maps, descartando avatares/selfies)
+        img_pack = obter_imagens_nicho(nicho, empresa)
+        padroes_avatar = ("/a/", "/a-/", "/al/", "default_user", "loader", "mapslogo", "photo.jpg")
+        fotos_validas = [
+            f for f in (lead.get("fotos") or [])
+            if isinstance(f, str) and not any(b in f for b in padroes_avatar)
+        ]
+        foto_hero_real = lead.get("foto_hero") if (lead.get("foto_hero") and not any(b in lead.get("foto_hero") for b in padroes_avatar)) else ""
+        foto_sec_real = lead.get("foto_secundaria") if (lead.get("foto_secundaria") and not any(b in lead.get("foto_secundaria") for b in padroes_avatar)) else ""
+        
+        hero_img = foto_hero_real or (fotos_validas[0] if fotos_validas else img_pack["hero"])
+        sec_img = foto_sec_real or (fotos_validas[1] if len(fotos_validas) > 1 else img_pack["secundaria"])
         
         # 4. Links WhatsApp e Google Maps
         tel_wa = lead["telefone_whatsapp"]
@@ -680,6 +808,132 @@ def deploy_github_pages():
     except Exception as e:
         log(f"⚠️ Erro ao executar deploy GitHub Pages ({e})")
         return "https://jaimilsonssdev-hue.github.io/sites-e-prospeccao"
+
+def atualizar_sites_existentes(leads=None):
+    """
+    Atualiza todos os sites já existentes em public/sites/ substituindo fotos genéricas
+    antigas (ex: photo-1497366216548-37526070297c) pelas fotos REAIS do Google Maps
+    ou por fotografias comerciais profissionais de alta conversão do nicho correspondente.
+    """
+    log("\n" + "=" * 60)
+    log("🔄 ATUALIZANDO FOTOS NOS SITES JÁ GERADOS (public/sites/)...")
+    log("=" * 60)
+    
+    if leads is None:
+        leads = carregar_leads()
+        
+    lookup = {}
+    for lead in leads:
+        s = slugify(lead.get("empresa", ""))
+        lookup[s] = lead
+        lookup[lead.get("empresa", "").lower().strip()] = lead
+
+    sites_dir = Path("public/sites")
+    if not sites_dir.exists():
+        log("Pasta public/sites não existe.")
+        return 0
+        
+    atualizados = 0
+    padroes_genericos = [
+        "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
+        "photo-1497366216548-37526070297c",
+        "photo-1497215728101-856f4ea42174"
+    ]
+    
+    for folder in sorted(sites_dir.iterdir()):
+        if not folder.is_dir():
+            continue
+        index_file = folder / "index.html"
+        if not index_file.exists():
+            continue
+            
+        slug = folder.name
+        lead = lookup.get(slug) or lookup.get(slug.replace("-", " "))
+        
+        with open(index_file, "r", encoding="utf-8", errors="replace") as f:
+            content = f.read()
+            
+        # Determina empresa e nicho do site
+        empresa = lead["empresa"] if lead else slug.replace("-", " ").title()
+        nicho = lead.get("nicho", "") if lead else ""
+        if not nicho:
+            if any(k in slug for k in ["odonto", "dente", "sorriso", "dental"]):
+                nicho = "Odontologia"
+            elif any(k in slug for k in ["estetic", "beleza", "face", "corpo", "harmoniz"]):
+                nicho = "Estética"
+            elif any(k in slug for k in ["clinic", "medic", "saude", "doctor"]):
+                nicho = "Clínica"
+            else:
+                nicho = "Geral"
+                
+        img_pack = obter_imagens_nicho(nicho, empresa)
+        
+        # Se o lead tem fotos reais autênticas do Maps
+        foto_hero_real = lead.get("foto_hero") if lead else ""
+        foto_sec_real = lead.get("foto_secundaria") if lead else ""
+        fotos_lista = [f for f in (lead.get("fotos") or []) if isinstance(f, str) and not any(b in f for b in ["/a/", "/a-/", "photo.jpg", "loader"])] if lead else []
+        
+        nova_hero = foto_hero_real or (fotos_lista[0] if fotos_lista else img_pack["hero"])
+        nova_sec = foto_sec_real or (fotos_lista[1] if len(fotos_lista) > 1 else img_pack["secundaria"])
+        
+        modificado = False
+        
+        # Se o site ainda está usando foto genérica de escritório ou temos foto real do Maps
+        if any(g in content for g in padroes_genericos) or foto_hero_real:
+            # Substitui hero genérica antiga
+            content = re.sub(
+                r'https://images\.unsplash\.com/photo-1497366216548-37526070297c[^\s"\'<>]+',
+                nova_hero,
+                content
+            )
+            # Substitui secundária genérica antiga
+            content = re.sub(
+                r'https://images\.unsplash\.com/photo-1497215728101-856f4ea42174[^\s"\'<>]+',
+                nova_sec,
+                content
+            )
+            
+            # Se temos fotos reais do Google Maps para esse lead específico, substitui a imagem do hero
+            if foto_hero_real:
+                content = re.sub(
+                    r'(<div class="[^"]*clip-asymmetric[^"]*">\s*<img src=")[^"]+(")',
+                    rf'\g<1>{nova_hero}\g<2>',
+                    content
+                )
+                content = re.sub(
+                    r'(<img src=")[^"]+(" alt="[^"]*" class="absolute inset-0 w-full h-full object-cover)',
+                    rf'\g<1>{nova_hero}\g<2>',
+                    content
+                )
+                content = re.sub(
+                    r'(<div class="rounded-3xl overflow-hidden shadow-2xl border-8 border-gray-50">\s*<img src=")[^"]+(")',
+                    rf'\g<1>{nova_hero}\g<2>',
+                    content
+                )
+                content = re.sub(
+                    r'(<div class="mt-12 rounded-3xl overflow-hidden shadow-2xl max-w-3xl mx-auto border-4 border-white">\s*<img src=")[^"]+(")',
+                    rf'\g<1>{nova_hero}\g<2>',
+                    content
+                )
+            if foto_sec_real:
+                content = re.sub(
+                    r'(<div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white">\s*<img src=")[^"]+(")',
+                    rf'\g<1>{nova_sec}\g<2>',
+                    content
+                )
+            modificado = True
+
+        if modificado:
+            with open(index_file, "w", encoding="utf-8") as f:
+                f.write(content)
+            atualizados += 1
+            tipo_foto = "FOTO REAL GOOGLE MAPS" if foto_hero_real else f"FOTO NICHADA ({nicho})"
+            log(f"  ✓ [{slug}] Atualizado com {tipo_foto}")
+            
+    log(f"🎉 Total de {atualizados} sites atualizados com sucesso com novas fotos autênticas e nichadas!")
+    return atualizados
+
 
 def executar_fluxo_completo(project_name="minha-maquina", metodo="github"):
     """

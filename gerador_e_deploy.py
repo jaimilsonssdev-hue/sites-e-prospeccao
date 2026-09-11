@@ -63,6 +63,9 @@ HUE_POR_NICHO = {
     "cafeteria": 30,     # Café caramelo
     "arquitetura": 220,  # Cinza ardósia / Azul
     "fisioterapia": 180, # Turquesa bem-estar
+    "tatuagem": 0,       # Vermelho / Dark Art
+    "ótica": 215,        # Azul royal precisão visual
+    "otica": 215,        # Azul royal precisão visual
     "geral": 200         # Azul corporativo
 }
 
@@ -137,12 +140,20 @@ IMAGENS_NICHO = {
         "secundaria": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80"
     },
     "arquitetura": {
-        "hero": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
+        "hero": "https://images.unsplash.com/photo-1600585526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80"
     },
     "fisioterapia": {
         "hero": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80"
+    },
+    "tatuagem": {
+        "hero": "https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?auto=format&fit=crop&w=800&q=80"
+    },
+    "otica": {
+        "hero": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80"
     },
     "geral": {
         "hero": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
@@ -150,50 +161,164 @@ IMAGENS_NICHO = {
     }
 }
 
+def identificar_nicho_chave(nicho: str, empresa: str = "") -> str:
+    """Normaliza e identifica a chave canônica do nicho a partir de qualquer sinônimo."""
+    texto = f"{nicho or ''} {empresa or ''}".lower()
+    
+    # 1. Barbearia
+    if any(k in texto for k in ["barb", "fade", "navalha", "corte masculin"]):
+        return "barbearia"
+    # 2. Odontologia
+    elif any(k in texto for k in ["odonto", "dent", "sorris", "dente", "protese", "implant", "ortodont", "clareament"]):
+        return "odontologia"
+    # 3. Psicologia e Terapias
+    elif any(k in texto for k in ["psico", "terap", "mente", "emocional", "psicanal", "acolhiment", "psiquiatr", "mindfulness", "saude mental"]):
+        return "psicologia"
+    # 4. Estética
+    elif any(k in texto for k in ["estet", "belez", "dermat", "pele", "corpo", "harmoniz", "botox", "spa", "lash", "sobrancelha"]):
+        return "estética"
+    # 5. Salão de Beleza
+    elif any(k in texto for k in ["salao", "cabel", "visagis", "hair", "mecha", "escova", "cacho", "pentead", "manicure", "pedicure", "esmalteri"]):
+        return "salao"
+    # 6. Clínicas e Saúde Geral
+    elif any(k in texto for k in ["clinic", "medic", "saud", "hospital", "policlinic", "cemed", "prevclin", "doutor", "dra"]):
+        return "clinica"
+    # 7. Pet Shop e Veterinária
+    elif any(k in texto for k in ["vet", "pet", "animal", "banho e tosa", "canil", "racao", "tosa"]):
+        return "veterinaria"
+    # 8. Oficina Mecânica e Auto Center
+    elif any(k in texto for k in ["oficin", "mecan", "auto", "pneu", "carro", "veic", "freio", "suspens", "troca de oleo", "auto center", "funilari"]):
+        return "oficina"
+    # 9. Imobiliária e Corretores
+    elif any(k in texto for k in ["imob", "corret", "imove", "creci", "locacao", "aluguel", "condominio", "apartamento"]):
+        return "imobiliaria"
+    # 10. Arquitetura e Engenharia
+    elif any(k in texto for k in ["arquit", "engenh", "decor", "design de interiores", "reforma", "construcao", "interiores"]):
+        return "arquitetura"
+    # 11. Contabilidade e Finanças
+    elif any(k in texto for k in ["contab", "financ", "fiscal", "tribut", "bpo", "abertura de empresa", "contador"]):
+        return "contabilidade"
+    # 12. Tatuagem e Piercing
+    elif any(k in texto for k in ["tatt", "tatuag", "pierc", "body art", "tatuador"]):
+        return "tatuagem"
+    # 13. Ótica e Visão
+    elif any(k in texto for k in ["otic", "oculos", "armacao", "lente de contato", "oftalmo"]):
+        return "otica"
+    # 14. Academias e Fitness
+    elif any(k in texto for k in ["acad", "fit", "cross", "trein", "muscul", "personal", "gym", "luta", "boxe", "jiu"]):
+        return "academia"
+    # 15. Gastronomia & Alimentação
+    elif any(k in texto for k in ["pizz"]):
+        return "pizzaria"
+    elif any(k in texto for k in ["burg", "hamburg", "lanche"]):
+        return "hamburgueria"
+    elif any(k in texto for k in ["caf", "confeit", "padar", "docer"]):
+        return "cafeteria"
+    elif any(k in texto for k in ["restaur", "gastro", "bistr", "comida", "buffet", "churrasc", "sushi", "almoco"]):
+        return "restaurante"
+    # 16. Advocacia e Jurídico
+    elif any(k in texto for k in ["advoc", "jurid", "direito", "lei", "oab"]):
+        return "advocacia"
+    # 17. Fisioterapia e Pilates
+    elif any(k in texto for k in ["fisio", "pilat", "quiro", "rpg", "reabilitacao"]):
+        return "fisioterapia"
+    # 18. Lojas e Comércio
+    elif any(k in texto for k in ["loj", "varej", "boutiq", "calc", "roup", "moda", "presentes", "cosmetic", "perfum", "vestuari", "biju"]):
+        return "loja"
+    
+    return "geral"
+
 def obter_imagens_nicho(nicho: str, empresa: str = "") -> dict:
     """Retorna imagens profissionais de alta conversão para o nicho correto, evitando escritórios genéricos."""
-    texto = f"{nicho} {empresa}".lower()
+    chave = identificar_nicho_chave(nicho, empresa)
+    return IMAGENS_NICHO.get(chave, IMAGENS_NICHO["geral"])
+
+def obter_copy_hero_nicho(chave: str, lead: dict) -> tuple:
+    """Gera badge, título e descrição de alto impacto comercial específicos para o nicho."""
+    empresa = lead["empresa"]
+    nicho = lead["nicho"]
+    bairro = lead.get("bairro") or lead.get("cidade", "")
+    cidade = lead.get("cidade", "")
+    nota = lead.get("nota", "5.0")
     
-    if any(k in texto for k in ["odonto", "dent", "sorris", "dente"]):
-        return IMAGENS_NICHO["odontologia"]
-    elif any(k in texto for k in ["estet", "belez", "dermat", "pele", "corpo", "harmoniz"]):
-        return IMAGENS_NICHO["estética"]
-    elif any(k in texto for k in ["clinic", "medic", "saud", "hospital", "policlinic", "cemed", "prevclin"]):
-        return IMAGENS_NICHO["clinica"]
-    elif any(k in texto for k in ["psico", "terap", "mente", "emocional"]):
-        return IMAGENS_NICHO["psicologia"]
-    elif any(k in texto for k in ["salao", "cabel", "visagis", "hair"]):
-        return IMAGENS_NICHO["salao"]
-    elif any(k in texto for k in ["barb"]):
-        return IMAGENS_NICHO["barbearia"]
-    elif any(k in texto for k in ["advoc", "jurid", "direito", "lei"]):
-        return IMAGENS_NICHO["advocacia"]
-    elif any(k in texto for k in ["contab", "financ", "fiscal"]):
-        return IMAGENS_NICHO["contabilidade"]
-    elif any(k in texto for k in ["imob", "corret", "imove"]):
-        return IMAGENS_NICHO["imobiliaria"]
-    elif any(k in texto for k in ["vet", "pet", "animal"]):
-        return IMAGENS_NICHO["veterinaria"]
-    elif any(k in texto for k in ["acad", "fit", "cross", "trein", "muscul"]):
-        return IMAGENS_NICHO["academia"]
-    elif any(k in texto for k in ["oficin", "mecan", "auto", "pneu", "carro", "veic"]):
-        return IMAGENS_NICHO["oficina"]
-    elif any(k in texto for k in ["loj", "varej", "boutiq", "calc", "roup", "otic", "moda"]):
-        return IMAGENS_NICHO["loja"]
-    elif any(k in texto for k in ["pizz"]):
-        return IMAGENS_NICHO["pizzaria"]
-    elif any(k in texto for k in ["burg", "hamburg"]):
-        return IMAGENS_NICHO["hamburgueria"]
-    elif any(k in texto for k in ["restaur", "gastro", "bistr", "comida", "buffet"]):
-        return IMAGENS_NICHO["restaurante"]
-    elif any(k in texto for k in ["caf", "confeit", "padar", "docer"]):
-        return IMAGENS_NICHO["cafeteria"]
-    elif any(k in texto for k in ["arquit", "engenh", "decor", "design"]):
-        return IMAGENS_NICHO["arquitetura"]
-    elif any(k in texto for k in ["fisio", "pilat", "quiro"]):
-        return IMAGENS_NICHO["fisioterapia"]
-    
-    return IMAGENS_NICHO["geral"]
+    if chave == "psicologia":
+        badge = f"Acolhimento & Saúde Emocional no {bairro}"
+        desc = f"Um espaço seguro, ético e acolhedor para cuidar do seu bem-estar emocional, autoconhecimento e equilíbrio em {cidade}. Agende sua sessão com tranquilidade."
+        titulo = f"Cuidado, Escuta e Transformação na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "barbearia":
+        badge = f"Estilo & Barboterapia no {bairro}"
+        desc = f"Cortes modernos com navalha afiada, degradê preciso e ambiente de respeito em {cidade}. Atendimento pontual com hora marcada."
+        titulo = f"Estilo, Precisão e Tradição na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "estética":
+        badge = f"Beleza & Bem-Estar no {bairro}"
+        desc = f"Realce sua autoestima com protocolos avançados, segurança clínica e resultados naturais em {cidade}."
+        titulo = f"Sua Melhor Versão e Cuidado na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "salao":
+        badge = f"Studio Capilar & Beleza no {bairro}"
+        desc = f"Mechas, cortes e tratamentos de alta performance para valorizar sua beleza e a saúde dos seus fios em {cidade}."
+        titulo = f"Transformação e Cuidado Capilar na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "odontologia":
+        badge = f"Referência em Odontologia no {bairro}"
+        desc = f"Tecnologia odontológica de ponta, tratamentos estéticos e prevenção para você sorrir com total confiança em {cidade}."
+        titulo = f"Excelência e Saúde para o Seu Sorriso na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "clinica":
+        badge = f"Medicina Integrada & Saúde no {bairro}"
+        desc = f"Corpo clínico qualificado, exames diagnósticos e atendimento humanizado para você e sua família em {cidade}."
+        titulo = f"Saúde, Confiança e Cuidado na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave in ["restaurante", "pizzaria", "hamburgueria", "cafeteria"]:
+        badge = f"Alta Gastronomia & Sabor no {bairro}"
+        desc = f"Ingredientes frescos, receitas artesanais nobres e a melhor experiência de sabor em {cidade}."
+        titulo = f"Sabor Único e Experiência Inesquecível no <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "academia":
+        badge = f"Treino & Alta Performance no {bairro}"
+        desc = f"Estrutura completa, suporte profissional e motivação diária para você superar seus limites e alcançar resultados em {cidade}."
+        titulo = f"Força, Saúde e Alta Performance na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "oficina":
+        badge = f"Centro Automotivo de Precisão no {bairro}"
+        desc = f"Diagnóstico computadorizado, peças originais com garantia e transparência total na manutenção do seu veículo em {cidade}."
+        titulo = f"Segurança e Precisão Mecânica na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave in ["veterinaria", "petshop"]:
+        badge = f"Carinho & Cuidado Animal no {bairro}"
+        desc = f"Atendimento carinhoso, estética especializada e cuidado veterinário completo que seu pet realmente merece em {cidade}."
+        titulo = f"Amor, Saúde e Cuidado Animal na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "advocacia":
+        badge = f"Autoridade Jurídica & Rigor no {bairro}"
+        desc = f"Defesa técnica de direitos, proteção patrimonial e assessoria jurídica transparente para seus interesses em {cidade}."
+        titulo = f"Segurança Jurídica e Firmeza na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "imobiliaria":
+        badge = f"Imóveis Selecionados no {bairro}"
+        desc = f"As melhores oportunidades de compra, venda e locação com assessoria jurídica e segurança documental em {cidade}."
+        titulo = f"O Imóvel Perfeito para Sua Família na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "arquitetura":
+        badge = f"Arquitetura & Design Sensorial no {bairro}"
+        desc = f"Projetos inteligentes que unem estética, conforto acústico, iluminação cenográfica e funcionalidade em {cidade}."
+        titulo = f"Design, Sofisticação e Obras Inteligentes na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "contabilidade":
+        badge = f"Assessoria Contábil & Estratégia no {bairro}"
+        desc = f"Redução legal de impostos, organização fiscal e gestão financeira completa para impulsionar sua empresa em {cidade}."
+        titulo = f"Gestão Contábil Inteligente e BPO na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "tatuagem":
+        badge = f"Studio de Arte Corporal & Tattoo no {bairro}"
+        desc = f"Tatuagens autorais, traços finos e biossegurança rigorosa com artistas experientes em {cidade}."
+        titulo = f"Arte Única e Expressão na Pele no <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "otica":
+        badge = f"Especialistas em Visão & Óculos no {bairro}"
+        desc = f"Lentes de alta definição, armações de grife e precisão óptica para o conforto dos seus olhos em {cidade}."
+        titulo = f"Visão Nítida e Estilo Impecável na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "fisioterapia":
+        badge = f"Fisioterapia & Bem-Estar no {bairro}"
+        desc = f"Reabilitação ortopédica, pilates clínico e alívio de dores crônicas com atendimento individualizado em {cidade}."
+        titulo = f"Movimento Livre, Saúde e Vitalidade na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "loja":
+        badge = f"Tendências & Novidades no {bairro}"
+        desc = f"Coleções exclusivas, atendimento atencioso e produtos selecionados para encantar você em {cidade}."
+        titulo = f"Estilo, Novidades e Qualidade na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    else:
+        badge = f"Referência em {nicho} no {bairro}"
+        desc = f"Conheça o padrão de qualidade que conquistou nota {nota} estrelas no Google em {cidade}. Agende ou tire dúvidas diretamente pelo WhatsApp."
+        titulo = f"Excelência e Cuidado para você na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+        
+    return badge, titulo, desc
 
 def log(msg):
     ts = datetime.now().strftime("%H:%M:%S")
@@ -225,26 +350,94 @@ def slugify(text):
     text = re.sub(r'[^a-z0-9]+', '-', text)
     return text.strip('-')
 
-def gerar_cards_servicos(nicho):
-    """Gera layout Bento Grid de alta conversão para os serviços"""
-    nicho_low = nicho.lower()
+def gerar_cards_servicos(nicho: str, empresa: str = ""):
+    """Gera layout Bento Grid de alta conversão para serviços em TODOS os nichos."""
+    chave = identificar_nicho_chave(nicho, empresa)
     
-    if "odonto" in nicho_low:
+    if chave == "odontologia":
         s1 = ("fa-tooth", "Clareamento & Estética Dental", "Técnicas modernas para devolver a harmonia, clareza e beleza natural do seu sorriso com total conforto.", ["Procedimento rápido e indolor", "Tecnologia de clareamento a laser", "Planejamento digital do sorriso"])
-        s2 = ("fa-teeth-open", "Implantes & Próteses", "Recupere sua mastigação e autoconfiança com procedimentos seguros e materiais de alto padrão.")
+        s2 = ("fa-teeth-open", "Implantes & Próteses Fixas", "Recupere sua mastigação e autoconfiança com procedimentos seguros e materiais de alto padrão.")
         s3 = ("fa-shield-heart", "Prevenção & Cuidados Gerais", "Check-up completo, profilaxia detalhada e orientações de saúde bucal para toda a família.")
-    elif "estétic" in nicho_low or "beleza" in nicho_low:
+    elif chave == "psicologia":
+        s1 = ("fa-brain", "Psicoterapia Individual & Saúde Emocional", "Espaço acolhedor e seguro para trabalhar ansiedade, estresse, autoconhecimento e desenvolvimento pessoal com total sigilo ético.", ["Sessões presenciais e online", "Abordagem humanizada e acolhedora", "Sigilo e ética profissional"])
+        s2 = ("fa-heart-pulse", "Terapia Cognitivo-Comportamental", "Metodologia estruturada para identificação de padrões, superação de bloqueios e inteligência emocional.")
+        s3 = ("fa-handshake-angle", "Acolhimento Terapêutico & Escuta Atenta", "Atendimento sensível e empático no seu ritmo, construindo ferramentas práticas para sua qualidade de vida.")
+    elif chave == "estética":
         s1 = ("fa-wand-magic-sparkles", "Harmonização & Rejuvenescimento", "Realce seus traços e beleza natural com procedimentos minimamente invasivos de alta precisão e segurança.", ["Bioestimuladores de colágeno", "Toxina botulínica e preenchimento", "Resultados elegantes e naturais"])
-        s2 = ("fa-spa", "Limpeza de Pele Profunda", "Desintoxicação dérmica, renovação celular e controle de oleosidade com dermocosméticos selecionados.")
-        s3 = ("fa-gem", "Tecnologia Corporal", "Protocolos avançados para tonificação, redução de medidas e melhora da firmeza corporal.")
-    elif "clinic" in nicho_low or "médic" in nicho_low or "saúde" in nicho_low:
+        s2 = ("fa-spa", "Limpeza de Pele Profunda & Peeling", "Desintoxicação dérmica, renovação celular e controle de oleosidade com dermocosméticos selecionados.")
+        s3 = ("fa-gem", "Protocolos Corporais & Drenagem", "Tecnologias avançadas para remodelagem corporal, melhora da circulação e firmeza da pele.")
+    elif chave == "clinica":
         s1 = ("fa-stethoscope", "Consultas Médicas & Especialidades", "Avaliação clínica completa com corpo médico experiente, diagnóstico seguro e ambiente acolhedor.", ["Equipe dedicada e atenciosa", "Estrutura moderna e confortável", "Orientações preventivas contínuas"])
         s2 = ("fa-heart-pulse", "Exames Diagnósticos & Rotina", "Agilidade na realização de procedimentos para você iniciar seu tratamento sem esperas desnecessárias.")
-        s3 = ("fa-user-doctor", "Acompanhamento Terapêutico", "Planos de cuidado contínuo para garantir sua saúde, disposição e qualidade de vida permanente.")
-    elif "advoc" in nicho_low or "jurídic" in nicho_low:
-        s1 = ("fa-scale-balanced", "Direito Civil & Soluções Patrimoniais", "Proteção patrimonial, inventários e soluções ágeis para resguardar a tranquilidade da sua família.", ["Atendimento consultivo especializado", "Defesa técnica de direitos", "Comunicação clara e transparente"])
-        s2 = ("fa-briefcase", "Assessoria Trabalhista", "Conformidade integral com as normas legais e atuação preventiva para seus interesses.")
-        s3 = ("fa-handshake", "Contratos & Negócios", "Elaboração e análise detalhada com cláusulas protetivas personalizadas.")
+        s3 = ("fa-user-doctor", "Acompanhamento Terapêutico & Saúde Integrada", "Planos de cuidado contínuo para garantir sua disposição e qualidade de vida permanente.")
+    elif chave == "salao":
+        s1 = ("fa-scissors", "Mechas, Coloração & Iluminação Capilar", "Técnicas exclusivas de morena iluminada, loiros perfeitos e correção de cor preservando a saúde do fio.", ["Preservação da fibra capilar", "Produtos de linhas profissionais", "Personalização para seu tom de pele"])
+        s2 = ("fa-spray-can-sparkles", "Cronograma Capilar & Tratamentos de Luxo", "Nutrição profunda, cauterização e reconstrução celular para fios radiantes e sedosos.")
+        s3 = ("fa-wand-magic", "Cortes Femininos & Visagismo Personalizado", "Harmonização facial completa valorizando seu estilo, movimento natural e textura dos fios.")
+    elif chave == "barbearia":
+        s1 = ("fa-scissors", "Corte Degradê & Fade de Alta Precisão", "Acabamento navalhado impecável, tesoura precisa e alinhamento milimétrico para o visual perfeito.", ["Pomadas e finalizadores premium", "Navalha descartável esterilizada", "Atendimento pontual sem filas"])
+        s2 = ("fa-soap", "Barboterapia com Toalha Quente & Ozônio", "Experiência relaxante com esfoliação, hidratação profunda e desenho milimétrico da barba.")
+        s3 = ("fa-shield-halved", "Acabamento, Pigmentação & Sobrancelha", "Alinhamento de contornos, camuflagem de falhas e cuidados masculinos de alto nível.")
+    elif chave == "advocacia":
+        s1 = ("fa-scale-balanced", "Direito Civil & Proteção Patrimonial Familiar", "Planejamento sucessório, inventários e soluções ágeis para resguardar a tranquilidade da sua família.", ["Atendimento consultivo especializado", "Defesa técnica rigorosa", "Comunicação clara e transparente"])
+        s2 = ("fa-briefcase", "Assessoria Trabalhista & Negócios", "Conformidade integral com as normas legais e atuação preventiva para resguardo de direitos.")
+        s3 = ("fa-handshake", "Contratos & Resolução Estratégica", "Elaboração e análise técnica detalhada com cláusulas protetivas personalizadas.")
+    elif chave == "restaurante":
+        s1 = ("fa-utensils", "Pratos Autorais & Gastronomia Especial", "Ingredientes selecionados e receitas elaboradas para proporcionar uma experiência de sabor inesquecível.", ["Ingredientes frescos e selecionados", "Ambiente climatizado e acolhedor", "Cardápio com opções variadas"])
+        s2 = ("fa-bowl-food", "Almoço Executivo & Massas Especiais", "Opções saborosas e balanceadas preparadas diariamente pelo nosso chef para o seu dia a dia.")
+        s3 = ("fa-wine-glass", "Sobremesas Artesanais & Carta de Bebidas", "Finalize sua refeição com doces finos, cafés especiais e bebidas harmonizadas.")
+    elif chave == "pizzaria":
+        s1 = ("fa-pizza-slice", "Pizzas Artesanais de Fermentação Lenta", "Massa leve de longa fermentação, molho de tomate fresco e queijos selecionados assados na perfeição.", ["Massa de digestão leve", "Recheios nobres e generosos", "Entrega rápida e quentinha"])
+        s2 = ("fa-fire-burner", "Bordas Especiais Recheadas", "Catupiry original, cheddar cremoso e bordas vulcão crocantes para elevar o sabor.")
+        s3 = ("fa-box-open", "Combos Especiais & Pizzas Doces", "Combinações com refrigerante e sobremesas irresistíveis com chocolate nobre e frutas frescas.")
+    elif chave == "hamburgueria":
+        s1 = ("fa-burger", "Burgers Artesanais com Blends Especiais", "Carne fresca grelhada no ponto certo, queijos derretidos e pães artesanais selados na manteiga.", ["Carne 100% fresca e selecionada", "Maioneses e molhos autorais", "Pão brioche fofinho e selado"])
+        s2 = ("fa-fire", "Batatas Rústicas Crocantes & Petiscos", "Porções generosas temperadas com ervas finas, cheddar cremoso e bacon crocante.")
+        s3 = ("fa-mug-saucer", "Milkshakes Cremosos & Bebidas Artesanais", "Sobremesas irresistíveis com sorvete artesanal, calda quente e recheios especiais.")
+    elif chave == "cafeteria":
+        s1 = ("fa-mug-hot", "Cafés Especiais Filtrados & Espresso de Origem", "Grãos selecionados com notas sensoriais únicas, extraídos com maestria por baristas dedicados.", ["Grãos 100% arábica selecionados", "Métodos de extração artesanais", "Ambiente agradável com Wi-Fi"])
+        s2 = ("fa-bread-slice", "Brunch Completo, Tostas & Salgados Nobres", "Pães artesanais de fermentação natural, croissants folhados e quiches assados no dia.")
+        s3 = ("fa-cake-candles", "Confeitaria Fina, Bolos & Tortas Artesanais", "Fatias generosas, doces autorais e combinações perfeitas para acompanhar seu café.")
+    elif chave == "academia":
+        s1 = ("fa-dumbbell", "Musculação & Treinamento de Alta Performance", "Maquinário moderno, biomecânica precisa e suporte contínuo de instrutores para alcançar suas metas.", ["Equipamentos modernos e ergonômicos", "Ambiente climatizado e motivador", "Acompanhamento profissional"])
+        s2 = ("fa-person-running", "Aulas Coletivas, Funcional & Cárdio", "Treinos dinâmicos para queima calórica, aumento de fôlego, agilidade e condicionamento integral.")
+        s3 = ("fa-clipboard-check", "Avaliação Física & Treinos Personalizados", "Bioimpedância completa e periodização de treinos alinhada aos seus objetivos pessoais.")
+    elif chave in ["veterinaria", "petshop"]:
+        s1 = ("fa-paw", "Banho, Tosa Especializada & Estética Pet", "Higiene carinhosa com produtos dermatológicos hipoalergênicos, tosa na tesoura e hidratação.", ["Profissionais carinhosos e pacientes", "Produtos hipoalergênicos seguros", "Ambiente higienizado e tranquilo"])
+        s2 = ("fa-shield-dog", "Consultas Veterinárias & Vacinação Importada", "Acompanhamento clínico preventivo, diagnóstico seguro e imunização completa para seu pet.")
+        s3 = ("fa-bag-shopping", "Farmácia Veterinária & Rações Super Premium", "Medicamentos originais, alimentação especializada e acessórios para o bem-estar animal.")
+    elif chave == "oficina":
+        s1 = ("fa-wrench", "Revisão Preventiva & Injeção Eletrônica", "Diagnóstico computadorizado de precisão para garantir a segurança e a potência original do seu carro.", ["Scanner automotivo de última geração", "Peças com garantia comprovada", "Orçamento detalhado e transparente"])
+        s2 = ("fa-oil-can", "Troca de Óleo, Filtros & Fluidos", "Lubrificantes recomendados pela montadora para máxima durabilidade do motor e economia.")
+        s3 = ("fa-car-burst", "Suspensão, Freios & Alinhamento 3D", "Manutenção preventiva de freios, amortecedores e geometria com tecnologia digital.")
+    elif chave == "imobiliaria":
+        s1 = ("fa-building", "Venda de Imóveis Residenciais & Alto Padrão", "Casas, apartamentos e condomínios selecionados com documentação 100% regularizada e assessoria integral.", ["Assessoria jurídica imobiliária", "Fotos e vídeos profissionais", "Atendimento personalizado e ágil"])
+        s2 = ("fa-key", "Locação Ágil com Garantia Digital", "Alugue seu imóvel sem burocracia, fiador tradicional ou complicações em cartório.")
+        s3 = ("fa-file-signature", "Avaliação Imobiliária de Precisão", "Análise mercadológica criteriosa para compra, venda e investimentos seguros na região.")
+    elif chave == "arquitetura":
+        s1 = ("fa-compass-drafting", "Projetos Arquitetônicos & Comerciais", "Planejamento inteligente do espaço unindo beleza estética, ventilação natural, funcionalidade e conforto.", ["Projetos executivos detalhados", "Imagens 3D realistas dos ambientes", "Otimização de custos na obra"])
+        s2 = ("fa-couch", "Design de Interiores & Consultoria de Espaços", "Harmonização de texturas, móveis planejados, iluminação cenográfica e materiais nobres.")
+        s3 = ("fa-helmet-safety", "Gerenciamento e Acompanhamento de Obras", "Controle rigoroso de prazos, equipe técnica qualificada e conformidade com o projeto.")
+    elif chave == "contabilidade":
+        s1 = ("fa-calculator", "Assessoria Contábil & Gestão Tributária", "Contabilidade consultiva que reduz impostos legalmente e organiza as finanças da sua empresa.", ["Planejamento tributário estratégico", "Atendimento digital sem papelada", "Segurança fiscal e conformidade"])
+        s2 = ("fa-file-invoice-dollar", "Abertura Ágil & Regularização de Empresas", "Formalização completa de CNPJs, enquadramento no regime tributário ideal e alvarás.")
+        s3 = ("fa-chart-pie", "BPO Financeiro & Folha de Pagamento", "Terceirização do contas a pagar, faturamento e gestão trabalhista para você focar no negócio.")
+    elif chave == "tatuagem":
+        s1 = ("fa-pen-nib", "Tatuagens Autorais, Fineline & Realismo", "Projetos exclusivos desenvolvidos sob medida na sua pele com traços ultrafinos e pigmentos importados.", ["Materiais 100% descartáveis e estéreis", "Desenhos autorais e exclusivos", "Ambiente higienizado e acolhedor"])
+        s2 = ("fa-paintbrush", "Coberturas (Cover-up) & Restaurações", "Revitalização e cobertura estética impecável de tatuagens antigas com harmonia anatômica.")
+        s3 = ("fa-ring", "Body Piercing & Joalheria em Titânio", "Perfurações com técnicas assépticas, biojoias de grau cirúrgico e cicatrização acelerada.")
+    elif chave == "otica":
+        s1 = ("fa-glasses", "Lentes Digitais de Alta Definição & Filtro Azul", "Proteção contra cansaço visual de telas, nitidez periférica e tecnologia antirreflexo premium.", ["Conferência precisa da prescrição médica", "Garantia de adaptação da lente", "Ajuste anatômico ao seu rosto"])
+        s2 = ("fa-eye", "Armações de Grifes Internacionais & Nacionais", "Modelos modernos em acetato nobre, titânio ultraleve e designs clássicos para seu estilo.")
+        s3 = ("fa-screwdriver-wrench", "Manutenção Especializada & Ajuste Gratuito", "Limpeza ultrassônica, alinhamento de plaquetas e substituição de parafusos com precisão.")
+    elif chave == "fisioterapia":
+        s1 = ("fa-person-walking", "Fisioterapia Ortopédica & Reabilitação", "Tratamento eficaz para alívio de dores articulares, lesões musculares e recuperação pós-cirúrgica.", ["Avaliação funcional detalhada", "Planos de tratamento personalizados", "Técnicas modernas sem dor"])
+        s2 = ("fa-spa", "Pilates Clínico & Reeducação Postural (RPG)", "Fortalecimento do core, ganho de flexibilidade e alinhamento postural com aparelhos dedicados.")
+        s3 = ("fa-hand-dots", "Terapia Manual & Alívio de Dores Crônicas", "Liberação miofascial, manipulação articular e mobilização para devolver seu movimento livre.")
+    elif chave == "loja":
+        s1 = ("fa-bag-shopping", "Coleção Exclusiva & Novidades da Estação", "Peças selecionadas alinhadas às maiores tendências de estilo, conforto e durabilidade.", ["Produtos de alta durabilidade e estilo", "Envio rápido ou retirada em loja", "Atendimento humanizado via WhatsApp"])
+        s2 = ("fa-shirt", "Lookbooks & Combinações Completas", "Sugestões de looks prontos para você arrasar em qualquer ocasião com elegância.")
+        s3 = ("fa-gift", "Embalagens para Presente & Linha Premium", "Opções sofisticadas com atendimento consultivo para você acertar no presente ideal.")
     else:
         s1 = ("fa-star", "Atendimento Personalizado & Sob Medida", "Metodologia exclusiva focada em entregar a melhor solução para sua necessidade.", ["Padrão de qualidade superior", "Atendimento ágil e pontual", "Satisfação garantida"])
         s2 = ("fa-award", "Profissionais Capacitados", "Equipe experiente e preparada para atender com máxima atenção a você.")
@@ -332,16 +525,20 @@ def gerar_cards_servicos(nicho):
     return bento_html
 
 
-def gerar_hero_section(hero_type, lead, hero_img):
+def gerar_hero_section(hero_type, lead, hero_img, nicho_chave=""):
     """
     Constrói o HTML específico para uma das 5 arquiteturas de hero do Kit
+    com copy personalizada para o nicho de atuação.
     """
     empresa = lead["empresa"]
     nicho = lead["nicho"]
-    bairro = lead["bairro"]
-    cidade = lead["cidade"]
-    nota = lead["nota"]
-    avaliacoes = lead["avaliacoes"]
+    bairro = lead.get("bairro") or lead.get("cidade", "")
+    cidade = lead.get("cidade", "")
+    nota = lead.get("nota", "5.0")
+    avaliacoes = lead.get("avaliacoes", "50+")
+    
+    chave = nicho_chave or identificar_nicho_chave(nicho, empresa)
+    badge, titulo, desc = obter_copy_hero_nicho(chave, lead)
     
     if hero_type == "ASYMMETRIC":
         return f"""
@@ -349,15 +546,15 @@ def gerar_hero_section(hero_type, lead, hero_img):
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               <div class="lg:col-span-7 z-10">
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[var(--color-300)] text-xs font-semibold uppercase tracking-wider mb-6 border border-white/10">
+                <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[var(--color-300)] text-xs font-semibold uppercase tracking-wider mb-6 border border-white/10">
                   <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  Referência em {nicho} no {bairro}
+                  {badge}
                 </span>
                 <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-                  Excelência e Cuidado para você na <span class="text-[var(--color-400)]">{empresa}</span>
+                  {titulo}
                 </h1>
-                <p class="mt-6 text-lg sm:text-xl text-white/80 max-w-2xl leading-relaxed">
-                  Conheça o padrão de qualidade que conquistou nota {nota} estrelas no Google em {cidade}. Agende ou tire dúvidas diretamente pelo WhatsApp.
+                <p class="mt-6 text-lg sm:text-xl text-white/85 max-w-2xl leading-relaxed">
+                  {desc}
                 </p>
                 <div class="mt-8 flex flex-wrap items-center gap-4">
                   <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" rel="noopener noreferrer" 
@@ -393,14 +590,14 @@ def gerar_hero_section(hero_type, lead, hero_img):
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <div class="inline-block text-xs font-bold uppercase tracking-wider text-[var(--color-600)] bg-[var(--color-100)] px-3 py-1 rounded-full mb-4">
-                  {nicho} de Alta Qualidade
+                <div class="inline-block text-xs font-bold uppercase tracking-wider text-[var(--color-600)] bg-[var(--color-100)] px-3.5 py-1.5 rounded-full mb-4">
+                  {badge}
                 </div>
                 <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
-                  O melhor atendimento em {nicho} no bairro {bairro}
+                  {titulo}
                 </h1>
                 <p class="mt-5 text-gray-600 text-lg leading-relaxed">
-                  A equipe da <strong>{empresa}</strong> une tecnologia, dedicação e profissionais capacitados para oferecer o melhor a você em {cidade}.
+                  {desc}
                 </p>
                 <div class="mt-8 flex flex-wrap gap-4">
                   <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" 
@@ -443,13 +640,13 @@ def gerar_hero_section(hero_type, lead, hero_img):
           <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
             <div class="max-w-3xl">
               <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-wider mb-6">
-                ⭐ {nota} Estrelas no Google Maps ({avaliacoes} avaliações)
+                ⭐ {nota} Estrelas no Google • {badge}
               </span>
               <h1 class="font-heading text-4xl sm:text-6xl font-black tracking-tight leading-tight drop-shadow-md">
                 {empresa}
               </h1>
               <p class="mt-5 text-xl text-white/90 leading-relaxed max-w-2xl drop-shadow">
-                Especialistas dedicados em {nicho} trazendo conforto, segurança e resultados de primeiro nível em {bairro}, {cidade}.
+                {desc}
               </p>
               <div class="mt-10 flex flex-wrap gap-4">
                 <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" 
@@ -469,13 +666,13 @@ def gerar_hero_section(hero_type, lead, hero_img):
           <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--color-100)] text-[var(--color-600)] text-xs font-bold uppercase tracking-wider mb-6">
               <i class="fa-solid fa-crown"></i>
-              <span>Autoridade em {nicho} em {cidade}</span>
+              <span>{badge}</span>
             </div>
             <h1 class="font-heading text-4xl sm:text-6xl font-black text-gray-900 tracking-tight leading-tight">
               {empresa}
             </h1>
             <p class="mt-6 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Atendimento personalizado e estrutura completa no bairro {bairro}. Entre em contato direto e experimente a diferença.
+              {desc}
             </p>
             <div class="mt-8 flex justify-center items-center gap-4">
               <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" 
@@ -497,14 +694,14 @@ def gerar_hero_section(hero_type, lead, hero_img):
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl">
               <span class="text-xs font-bold tracking-widest uppercase text-[var(--color-300)] mb-4 block">
-                {bairro.upper()}, {cidade.upper()} — {nicho.upper()}
+                {badge}
               </span>
               <h1 class="font-heading text-5xl sm:text-7xl font-black tracking-tighter leading-none text-white">
                 {empresa}
               </h1>
               <div class="w-24 h-1.5 bg-[var(--color-500)] my-8"></div>
               <p class="text-xl sm:text-2xl text-gray-300 font-light leading-relaxed">
-                Compromisso inegociável com qualidade, pontualidade e transparência para clientes exigentes em {cidade}.
+                {desc}
               </p>
               <div class="mt-10 flex flex-wrap gap-4 items-center">
                 <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" 
@@ -592,16 +789,9 @@ def gerar_sites(leads):
         # 1. Rotação das 5 Heros
         hero_type = HERO_TYPES[idx % len(HERO_TYPES)]
         
-        # 2. Seleção de Paleta com variação dinâmica (para que empresas do mesmo nicho não fiquem idênticas)
-        nicho_key = nicho.lower()
-        base_hue = HUE_POR_NICHO.get(nicho_key)
-        if base_hue is None:
-            if any(k in nicho_key for k in ["clinic", "medic", "saud", "hospital"]):
-                base_hue = HUE_POR_NICHO["clinica"]
-            elif any(k in nicho_key for k in ["estet", "belez"]):
-                base_hue = HUE_POR_NICHO["estética"]
-            else:
-                base_hue = 200
+        # 2. Seleção de Paleta com variação dinâmica e identificação do nicho canônico
+        nicho_chave = identificar_nicho_chave(nicho, empresa)
+        base_hue = HUE_POR_NICHO.get(nicho_chave, 200)
         hue_offsets = [0, -25, 20, -15, 30]
         hue = (base_hue + hue_offsets[idx % len(hue_offsets)]) % 360
         paleta = gerar_paleta_hsl(hue)
@@ -629,8 +819,8 @@ def gerar_sites(leads):
         maps_query = urllib.parse.quote(f"{empresa} {endereco_full}")
         
         # 5. Componentes HTML
-        hero_html = gerar_hero_section(hero_type, lead, hero_img)
-        produtos_html = gerar_cards_servicos(nicho)
+        hero_html = gerar_hero_section(hero_type, lead, hero_img, nicho_chave)
+        produtos_html = gerar_cards_servicos(nicho, empresa)
         
         # 6. Substituições no Template
         html = template_raw

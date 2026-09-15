@@ -42,188 +42,228 @@ HERO_TYPES = [
     "TYPOGRAPHIC"
 ]
 
-# Paletas de cores HUE base por nicho
+# Paletas de cores HUE base por nicho (19 Nichos Canônicos)
 HUE_POR_NICHO = {
-    "odontologia": 195,  # Teal / Ciano médico
-    "clinica": 205,      # Azul saúde confiança
-    "estética": 335,     # Rose / Pink sofisticado
-    "psicologia": 170,   # Verde sálvia equilíbrio
-    "salao": 320,        # Magenta / Pink
-    "barbearia": 35,     # Ocre / Dark vintage
-    "advocacia": 275,    # Purple / Índigo formal
-    "contabilidade": 220,# Azul corporativo
-    "imobiliária": 210,  # Azul imobiliário
-    "veterinária": 155,  # Verde natureza / Pet
-    "academia": 12,      # Vermelho / Laranja energia
-    "oficina": 25,       # Âmbar / Laranja mecânico
-    "loja": 260,         # Roxo moderno
-    "restaurante": 28,   # Laranja apetitoso
-    "pizzaria": 15,      # Vermelho / Terracota
-    "hamburgueria": 20,  # Vermelho burguer
-    "cafeteria": 30,     # Café caramelo
-    "arquitetura": 220,  # Cinza ardósia / Azul
-    "fisioterapia": 180, # Turquesa bem-estar
-    "tatuagem": 0,       # Vermelho / Dark Art
-    "ótica": 215,        # Azul royal precisão visual
-    "otica": 215,        # Azul royal precisão visual
+    "loja": 260,         # Roxo / Magenta moderno
+    "delivery": 20,       # Laranja avermelhado apetitoso
+    "restaurante": 28,   # Âmbar / Terracota gourmet
+    "sorveteria": 195,   # Turquesa / Ciano refrescante
+    "oficina": 25,       # Laranja mecânico / Grafite
+    "clinica": 175,      # Verde médico / Saúde
+    "psicologia": 165,   # Verde sálvia equilíbrio
+    "petshop": 145,      # Verde natureza pet
+    "advocacia": 275,    # Azul marinho / Índigo formal
+    "odontologia": 195,  # Azul dental / Turquesa
+    "construcao": 28,    # Terracota / Ocre construção
+    "imobiliaria": 215,  # Azul imobiliário
+    "seguros": 160,      # Verde esmeralda proteção
+    "autonomo": 220,     # Azul aço / Técnico
+    "pessoal": 280,      # Violeta autoridade
+    "fitness": 12,       # Vermelho / Laranja energia
+    "nutricao": 135,     # Verde lima / Saúde
+    "costura": 330,      # Rosé gold / Elegância
+    "tecnologia": 215,   # Azul neon / TI
     "geral": 200         # Azul corporativo
 }
 
+def gerar_svg_hero(nicho: str, empresa: str) -> str:
+    """Gera um banner visual em SVG Data-URI com gradiente mesh vetorial e monograma institucional."""
+    import urllib.parse
+    cores = {
+        "loja": ("#1e1b4b", "#4338ca", "#065f46", "#34d399", "LOJA & E-COMMERCE OFICIAL"),
+        "delivery": ("#450a0a", "#b91c1c", "#d97706", "#fbbf24", "DELIVERY RÁPIDO & PEDIDOS"),
+        "restaurante": ("#1c1917", "#78350f", "#991b1b", "#f59e0b", "GASTRONOMIA & RESTAURANTE"),
+        "sorveteria": ("#083344", "#0284c7", "#db2777", "#38bdf8", "GELATERIA & AÇAÍ GOURMET"),
+        "oficina": ("#0f172a", "#1e293b", "#c2410c", "#f97316", "OFICINA MECÂNICA & AUTO CENTER"),
+        "clinica": ("#042f2e", "#0f766e", "#0284c7", "#2dd4bf", "SAÚDE & CLÍNICA MÉDICA"),
+        "psicologia": ("#064e3b", "#047857", "#0f766e", "#6ee7b7", "PSICOLOGIA & ACOLHIMENTO"),
+        "petshop": ("#14532d", "#15803d", "#b45309", "#facc15", "PET SHOP & CUIDADO ANIMAL"),
+        "advocacia": ("#09090b", "#18181b", "#3b0764", "#fbbf24", "ADVOCACIA & CONSULTORIA JURÍDICA"),
+        "odontologia": ("#082f49", "#0284c7", "#0f766e", "#38bdf8", "ODONTOLOGIA & ESTÉTICA DENTAL"),
+        "construcao": ("#1c1917", "#44403c", "#9a3412", "#fb923c", "CONSTRUÇÃO CIVIL & REFORMAS"),
+        "imobiliaria": ("#0f172a", "#1e3a8a", "#0369a1", "#60a5fa", "IMOBILIÁRIA & CORRETORES"),
+        "seguros": ("#022c22", "#065f46", "#1e3a8a", "#34d399", "CORRETORA DE SEGUROS"),
+        "autonomo": ("#18181b", "#27272a", "#3f3f46", "#a1a1aa", "SERVIÇOS TÉCNICOS AUTÔNOMO"),
+        "pessoal": ("#18181b", "#312e81", "#581c87", "#c084fc", "PÁGINA PESSOAL & PORTFÓLIO"),
+        "fitness": ("#18181b", "#7f1d1d", "#991b1b", "#ef4444", "FITNESS & PERSONAL TRAINER"),
+        "nutricao": ("#052e16", "#166534", "#047857", "#86efac", "NUTRICIONISTA & DIETAS"),
+        "costura": ("#2e1065", "#581c87", "#831843", "#f472b6", "ATELIÊ DE COSTURA & MODA"),
+        "tecnologia": ("#030712", "#111827", "#1e1b4b", "#38bdf8", "TECNOLOGIA & INFORMÁTICA"),
+        "geral": ("#09090b", "#1e293b", "#172554", "#60a5fa", "EMPRESA VERIFICADA")
+    }
+    c1, c2, c3, acc, label = cores.get(nicho, cores["geral"])
+    safe_empresa = (empresa or "Nossa Empresa").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    palavras = safe_empresa.split()
+    initials = "".join([w[0] for w in palavras[:2]]).upper() if palavras else "NE"
+    
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+      <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="{c1}"/>
+          <stop offset="50%" stop-color="{c2}"/>
+          <stop offset="100%" stop-color="{c3}"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="30%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="{acc}" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0.5"/>
+        </radialGradient>
+      </defs>
+      <rect width="1200" height="800" fill="url(#bg)"/>
+      <rect width="1200" height="800" fill="url(#glow)"/>
+      <g transform="translate(600, 320)">
+        <circle cx="0" cy="0" r="130" fill="#000000" fill-opacity="0.3" stroke="{acc}" stroke-width="4" stroke-opacity="0.8"/>
+        <text x="0" y="32" font-family="system-ui, sans-serif" font-size="96" font-weight="900" fill="#ffffff" text-anchor="middle">{initials}</text>
+      </g>
+      <text x="600" y="520" font-family="system-ui, sans-serif" font-size="20" font-weight="800" fill="{acc}" text-anchor="middle" letter-spacing="4">{label}</text>
+      <text x="600" y="570" font-family="system-ui, sans-serif" font-size="44" font-weight="900" fill="#ffffff" text-anchor="middle">{safe_empresa}</text>
+      <text x="600" y="615" font-family="system-ui, sans-serif" font-size="18" font-weight="500" fill="#cbd5e1" text-anchor="middle">ATENDIMENTO EXCLUSIVO &bull; QUALIDADE COMPROVADA</text>
+    </svg>"""
+    return "data:image/svg+xml;utf8," + urllib.parse.quote(svg)
+
 # Imagens de alta conversão no Unsplash por nicho (curadoria comercial profissional)
 IMAGENS_NICHO = {
-    "odontologia": {
-        "hero": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=800&q=80"
+    "loja": {
+        "hero": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80"
+    },
+    "delivery": {
+        "hero": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"
+    },
+    "restaurante": {
+        "hero": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
+    },
+    "sorveteria": {
+        "hero": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=800&q=80"
+    },
+    "oficina": {
+        "hero": "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=800&q=80"
     },
     "clinica": {
         "hero": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80"
     },
-    "estética": {
-        "hero": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1512290900672-1f5be1c6e1c8?auto=format&fit=crop&w=800&q=80"
-    },
     "psicologia": {
         "hero": "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80"
     },
-    "salao": {
-        "hero": "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=800&q=80"
-    },
-    "barbearia": {
-        "hero": "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80"
+    "petshop": {
+        "hero": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80"
     },
     "advocacia": {
         "hero": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80"
     },
-    "contabilidade": {
-        "hero": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80"
+    "odontologia": {
+        "hero": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=800&q=80"
+    },
+    "construcao": {
+        "hero": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80"
     },
     "imobiliaria": {
         "hero": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
     },
-    "veterinaria": {
-        "hero": "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=800&q=80"
+    "seguros": {
+        "hero": "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80"
     },
-    "academia": {
+    "autonomo": {
+        "hero": "https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80"
+    },
+    "pessoal": {
+        "hero": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
+    },
+    "fitness": {
         "hero": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80",
         "secundaria": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80"
     },
-    "oficina": {
-        "hero": "https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80"
+    "nutricao": {
+        "hero": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=800&q=80"
     },
-    "loja": {
-        "hero": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=800&q=80"
+    "costura": {
+        "hero": "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80"
     },
-    "restaurante": {
-        "hero": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
-    },
-    "pizzaria": {
-        "hero": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80"
-    },
-    "hamburgueria": {
-        "hero": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
-    },
-    "cafeteria": {
-        "hero": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80"
-    },
-    "arquitetura": {
-        "hero": "https://images.unsplash.com/photo-1600585526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80"
-    },
-    "fisioterapia": {
-        "hero": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80"
-    },
-    "tatuagem": {
-        "hero": "https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?auto=format&fit=crop&w=800&q=80"
-    },
-    "otica": {
-        "hero": "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=800&q=80"
+    "tecnologia": {
+        "hero": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1588508065123-287b28e013da?auto=format&fit=crop&w=800&q=80"
     },
     "geral": {
-        "hero": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
-        "secundaria": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80"
+        "hero": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=80",
+        "secundaria": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
     }
 }
 
 def identificar_nicho_chave(nicho: str, empresa: str = "") -> str:
-    """Normaliza e identifica a chave canônica do nicho a partir de qualquer sinônimo."""
+    """Normaliza e identifica a chave canônica do nicho entre os 19 nichos oficiais."""
     texto = f"{nicho or ''} {empresa or ''}".lower()
     
-    # 1. Barbearia
-    if any(k in texto for k in ["barb", "fade", "navalha", "corte masculin"]):
-        return "barbearia"
-    # 2. Odontologia
+    # 1. Delivery & Lanches
+    if any(k in texto for k in ["delivery", "pizz", "burg", "hamburg", "lanche", "marmit", "ifood", "entreg"]):
+        return "delivery"
+    # 2. Sorveteria & Doces
+    elif any(k in texto for k in ["sorvet", "açai", "acai", "gelat", "palet", "picol", "confeit", "docer"]):
+        return "sorveteria"
+    # 3. Restaurante & Gastronomia
+    elif any(k in texto for k in ["restaur", "gastro", "bistr", "churrasc", "buffet", "sushi", "almoco", "comida", "caf"]):
+        return "restaurante"
+    # 4. Odontologia
     elif any(k in texto for k in ["odonto", "dent", "sorris", "dente", "protese", "implant", "ortodont", "clareament"]):
         return "odontologia"
-    # 3. Psicologia e Terapias
+    # 5. Terapeutas / Psicólogos
     elif any(k in texto for k in ["psico", "terap", "mente", "emocional", "psicanal", "acolhiment", "psiquiatr", "mindfulness", "saude mental"]):
         return "psicologia"
-    # 4. Estética
-    elif any(k in texto for k in ["estet", "belez", "dermat", "pele", "corpo", "harmoniz", "botox", "spa", "lash", "sobrancelha"]):
-        return "estética"
-    # 5. Salão de Beleza
-    elif any(k in texto for k in ["salao", "cabel", "visagis", "hair", "mecha", "escova", "cacho", "pentead", "manicure", "pedicure", "esmalteri"]):
-        return "salao"
-    # 6. Clínicas e Saúde Geral
-    elif any(k in texto for k in ["clinic", "medic", "saud", "hospital", "policlinic", "cemed", "prevclin", "doutor", "dra"]):
+    # 6. Saúde / Clínica Médica
+    elif any(k in texto for k in ["clinic", "medic", "saud", "hospital", "policlinic", "doutor", "dra", "fisio", "estet", "dermat", "biomed"]):
         return "clinica"
-    # 7. Pet Shop e Veterinária
-    elif any(k in texto for k in ["vet", "pet", "animal", "banho e tosa", "canil", "racao", "tosa"]):
-        return "veterinaria"
-    # 8. Oficina Mecânica e Auto Center
+    # 7. PetShop / Casa de Ração
+    elif any(k in texto for k in ["pet", "vet", "animal", "banho e tosa", "canil", "racao", "tosa", "veterin"]):
+        return "petshop"
+    # 8. Oficina Mecânica & Auto Center
     elif any(k in texto for k in ["oficin", "mecan", "auto", "pneu", "carro", "veic", "freio", "suspens", "troca de oleo", "auto center", "funilari"]):
         return "oficina"
-    # 9. Imobiliária e Corretores
+    # 9. Construção Civil & Reformas
+    elif any(k in texto for k in ["constru", "reforma", "obra", "engenh", "arquit", "eletric", "pedreir", "pintor", "pintura", "marcen"]):
+        return "construcao"
+    # 10. Imobiliária & Corretores
     elif any(k in texto for k in ["imob", "corret", "imove", "creci", "locacao", "aluguel", "condominio", "apartamento"]):
         return "imobiliaria"
-    # 10. Arquitetura e Engenharia
-    elif any(k in texto for k in ["arquit", "engenh", "decor", "design de interiores", "reforma", "construcao", "interiores"]):
-        return "arquitetura"
-    # 11. Contabilidade e Finanças
-    elif any(k in texto for k in ["contab", "financ", "fiscal", "tribut", "bpo", "abertura de empresa", "contador"]):
-        return "contabilidade"
-    # 12. Tatuagem e Piercing
-    elif any(k in texto for k in ["tatt", "tatuag", "pierc", "body art", "tatuador"]):
-        return "tatuagem"
-    # 13. Ótica e Visão
-    elif any(k in texto for k in ["otic", "oculos", "armacao", "lente de contato", "oftalmo"]):
-        return "otica"
-    # 14. Academias e Fitness
-    elif any(k in texto for k in ["acad", "fit", "cross", "trein", "muscul", "personal", "gym", "luta", "boxe", "jiu"]):
-        return "academia"
-    # 15. Gastronomia & Alimentação
-    elif any(k in texto for k in ["pizz"]):
-        return "pizzaria"
-    elif any(k in texto for k in ["burg", "hamburg", "lanche"]):
-        return "hamburgueria"
-    elif any(k in texto for k in ["caf", "confeit", "padar", "docer"]):
-        return "cafeteria"
-    elif any(k in texto for k in ["restaur", "gastro", "bistr", "comida", "buffet", "churrasc", "sushi", "almoco"]):
-        return "restaurante"
-    # 16. Advocacia e Jurídico
+    # 11. Seguros & Previdência
+    elif any(k in texto for k in ["segur", "apolice", "sinistro", "previdenci", "vida e saude", "corretora de seguro"]):
+        return "seguros"
+    # 12. Advocacia & Jurídico
     elif any(k in texto for k in ["advoc", "jurid", "direito", "lei", "oab"]):
         return "advocacia"
-    # 17. Fisioterapia e Pilates
-    elif any(k in texto for k in ["fisio", "pilat", "quiro", "rpg", "reabilitacao"]):
-        return "fisioterapia"
-    # 18. Lojas e Comércio
-    elif any(k in texto for k in ["loj", "varej", "boutiq", "calc", "roup", "moda", "presentes", "cosmetic", "perfum", "vestuari", "biju"]):
+    # 13. Fitness & Treinamento
+    elif any(k in texto for k in ["acad", "fit", "cross", "trein", "muscul", "personal", "gym", "pilat", "luta", "boxe"]):
+        return "fitness"
+    # 14. Nutricionista & Dietas
+    elif any(k in texto for k in ["nutri", "dieta", "emagrec", "reeducacao alimentar", "nutrol"]):
+        return "nutricao"
+    # 15. Costureira / Ateliê
+    elif any(k in texto for k in ["costur", "atelie", "alfaiat", "ajuste de roupa", "vestido", "moda sob medida", "bainha"]):
+        return "costura"
+    # 16. Tecnologia & Informática
+    elif any(k in texto for k in ["tecnolog", "informatic", "software", "computad", "notebook", "celular", "assistencia tecnica", "redes", "ti ", "t.i", "program"]):
+        return "tecnologia"
+    # 17. Profissional Autônomo & Serviços Gerais
+    elif any(k in texto for k in ["autonom", "servico", "consultor", "chaveir", "montador", "marido de aluguel", "diarist", "limpeza", "contab", "contador", "despachant"]):
+        return "autonomo"
+    # 18. Pessoal & Portfólio
+    elif any(k in texto for k in ["pessoal", "portfoli", "curriculo", "palestrant", "influencer", "criador", "artista", "tatuag", "tattoo"]):
+        return "pessoal"
+    # 19. Lojas & E-commerce
+    elif any(k in texto for k in ["loj", "varej", "boutiq", "calc", "roup", "moda", "presentes", "cosmetic", "perfum", "vestuari", "biju", "salao", "barb", "otica", "e-commerce", "ecommerce"]):
         return "loja"
     
     return "geral"
@@ -241,78 +281,82 @@ def obter_copy_hero_nicho(chave: str, lead: dict) -> tuple:
     cidade = lead.get("cidade", "")
     nota = lead.get("nota", "5.0")
     
-    if chave == "psicologia":
-        badge = f"Acolhimento & Saúde Emocional no {bairro}"
-        desc = f"Um espaço seguro, ético e acolhedor para cuidar do seu bem-estar emocional, autoconhecimento e equilíbrio em {cidade}. Agende sua sessão com tranquilidade."
-        titulo = f"Cuidado, Escuta e Transformação na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "barbearia":
-        badge = f"Estilo & Barboterapia no {bairro}"
-        desc = f"Cortes modernos com navalha afiada, degradê preciso e ambiente de respeito em {cidade}. Atendimento pontual com hora marcada."
-        titulo = f"Estilo, Precisão e Tradição na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "estética":
-        badge = f"Beleza & Bem-Estar no {bairro}"
-        desc = f"Realce sua autoestima com protocolos avançados, segurança clínica e resultados naturais em {cidade}."
-        titulo = f"Sua Melhor Versão e Cuidado na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "salao":
-        badge = f"Studio Capilar & Beleza no {bairro}"
-        desc = f"Mechas, cortes e tratamentos de alta performance para valorizar sua beleza e a saúde dos seus fios em {cidade}."
-        titulo = f"Transformação e Cuidado Capilar na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "odontologia":
-        badge = f"Referência em Odontologia no {bairro}"
-        desc = f"Tecnologia odontológica de ponta, tratamentos estéticos e prevenção para você sorrir com total confiança em {cidade}."
-        titulo = f"Excelência e Saúde para o Seu Sorriso na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "clinica":
-        badge = f"Medicina Integrada & Saúde no {bairro}"
-        desc = f"Corpo clínico qualificado, exames diagnósticos e atendimento humanizado para você e sua família em {cidade}."
-        titulo = f"Saúde, Confiança e Cuidado na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave in ["restaurante", "pizzaria", "hamburgueria", "cafeteria"]:
+    if chave == "loja":
+        badge = f"Tendências & Novidades no {bairro}"
+        desc = f"Coleções exclusivas, atendimento atencioso e produtos selecionados para encantar você em {cidade}. Compre com facilidade e segurança."
+        titulo = f"Estilo, Novidades e Qualidade na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "delivery":
+        badge = f"Delivery Rápido & Quentinho no {bairro}"
+        desc = f"Pratos preparados com ingredientes frescos, embalagens térmicas seguras e entrega ágil para você saborear no conforto de casa em {cidade}."
+        titulo = f"Sabor Irresistível e Rapidez na Sua Porta com a <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "restaurante":
         badge = f"Alta Gastronomia & Sabor no {bairro}"
-        desc = f"Ingredientes frescos, receitas artesanais nobres e a melhor experiência de sabor em {cidade}."
+        desc = f"Ingredientes frescos, receitas artesanais nobres e a melhor experiência de sabor em {cidade}. Ambiente acolhedor para família e amigos."
         titulo = f"Sabor Único e Experiência Inesquecível no <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "academia":
-        badge = f"Treino & Alta Performance no {bairro}"
-        desc = f"Estrutura completa, suporte profissional e motivação diária para você superar seus limites e alcançar resultados em {cidade}."
-        titulo = f"Força, Saúde e Alta Performance na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "sorveteria":
+        badge = f"Gelatos Artesanais & Açaí Nobre no {bairro}"
+        desc = f"Receitas cremosas preparadas artesanalmente com frutas frescas e ingredientes de verdade em {cidade}. Momentos doces para o seu dia."
+        titulo = f"O Mais Puro Sabor Refrescante na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
     elif chave == "oficina":
         badge = f"Centro Automotivo de Precisão no {bairro}"
         desc = f"Diagnóstico computadorizado, peças originais com garantia e transparência total na manutenção do seu veículo em {cidade}."
         titulo = f"Segurança e Precisão Mecânica na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave in ["veterinaria", "petshop"]:
+    elif chave == "clinica":
+        badge = f"Medicina Integrada & Saúde no {bairro}"
+        desc = f"Corpo clínico qualificado, exames diagnósticos e atendimento humanizado para você e sua família em {cidade}."
+        titulo = f"Saúde, Confiança e Cuidado na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "psicologia":
+        badge = f"Acolhimento & Saúde Emocional no {bairro}"
+        desc = f"Um espaço seguro, ético e acolhedor para cuidar do seu bem-estar emocional, autoconhecimento e equilíbrio em {cidade}. Agende sua sessão com tranquilidade."
+        titulo = f"Cuidado, Escuta e Transformação na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "petshop":
         badge = f"Carinho & Cuidado Animal no {bairro}"
-        desc = f"Atendimento carinhoso, estética especializada e cuidado veterinário completo que seu pet realmente merece em {cidade}."
+        desc = f"Atendimento carinhoso, estética especializada e cuidado completo que seu pet realmente merece em {cidade}."
         titulo = f"Amor, Saúde e Cuidado Animal na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
     elif chave == "advocacia":
         badge = f"Autoridade Jurídica & Rigor no {bairro}"
         desc = f"Defesa técnica de direitos, proteção patrimonial e assessoria jurídica transparente para seus interesses em {cidade}."
         titulo = f"Segurança Jurídica e Firmeza na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "odontologia":
+        badge = f"Referência em Odontologia no {bairro}"
+        desc = f"Tecnologia odontológica de ponta, tratamentos estéticos e prevenção para você sorrir com total confiança em {cidade}."
+        titulo = f"Excelência e Saúde para o Seu Sorriso na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "construcao":
+        badge = f"Obras de Confiança & Engenharia no {bairro}"
+        desc = f"Gestão integral de obras, cumprimento rigoroso de prazos e acabamentos de alto padrão em {cidade}. Engenharia que valoriza seu patrimônio."
+        titulo = f"Construções Sólidas e Reformas Impecáveis na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
     elif chave == "imobiliaria":
         badge = f"Imóveis Selecionados no {bairro}"
         desc = f"As melhores oportunidades de compra, venda e locação com assessoria jurídica e segurança documental em {cidade}."
         titulo = f"O Imóvel Perfeito para Sua Família na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "arquitetura":
-        badge = f"Arquitetura & Design Sensorial no {bairro}"
-        desc = f"Projetos inteligentes que unem estética, conforto acústico, iluminação cenográfica e funcionalidade em {cidade}."
-        titulo = f"Design, Sofisticação e Obras Inteligentes na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "contabilidade":
-        badge = f"Assessoria Contábil & Estratégia no {bairro}"
-        desc = f"Redução legal de impostos, organização fiscal e gestão financeira completa para impulsionar sua empresa em {cidade}."
-        titulo = f"Gestão Contábil Inteligente e BPO na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "tatuagem":
-        badge = f"Studio de Arte Corporal & Tattoo no {bairro}"
-        desc = f"Tatuagens autorais, traços finos e biossegurança rigorosa com artistas experientes em {cidade}."
-        titulo = f"Arte Única e Expressão na Pele no <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "otica":
-        badge = f"Especialistas em Visão & Óculos no {bairro}"
-        desc = f"Lentes de alta definição, armações de grife e precisão óptica para o conforto dos seus olhos em {cidade}."
-        titulo = f"Visão Nítida e Estilo Impecável na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "fisioterapia":
-        badge = f"Fisioterapia & Bem-Estar no {bairro}"
-        desc = f"Reabilitação ortopédica, pilates clínico e alívio de dores crônicas com atendimento individualizado em {cidade}."
-        titulo = f"Movimento Livre, Saúde e Vitalidade na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
-    elif chave == "loja":
-        badge = f"Tendências & Novidades no {bairro}"
-        desc = f"Coleções exclusivas, atendimento atencioso e produtos selecionados para encantar você em {cidade}."
-        titulo = f"Estilo, Novidades e Qualidade na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "seguros":
+        badge = f"Proteção Patrimonial & Tranquilidade no {bairro}"
+        desc = f"Consultoria especializada em seguros para vida, veículos, empresas e residências em {cidade}. Tranquilidade com suporte imediato em sinistros."
+        titulo = f"Segurança Absoluta para o que Mais Importa na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "autonomo":
+        badge = f"Serviço Especializado & Pontual no {bairro}"
+        desc = f"Atendimento ágil, pontualidade britânica e serviço de qualidade para resolver sua necessidade com total garantia em {cidade}."
+        titulo = f"Solução Rápida, Prática e Garantida com <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "pessoal":
+        badge = f"Autoridade & Conexão no {bairro}"
+        desc = f"Portfólio de projetos, formação e soluções desenvolvidas com paixão, técnica e autenticidade para impactar pessoas em {cidade} e online."
+        titulo = f"Conheça a Trajetória e o Trabalho de <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "fitness":
+        badge = f"Treino & Alta Performance no {bairro}"
+        desc = f"Estrutura completa, suporte profissional e motivação diária para você superar seus limites e alcançar resultados em {cidade}."
+        titulo = f"Força, Saúde e Alta Performance na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "nutricao":
+        badge = f"Nutrição Científica & Saúde no {bairro}"
+        desc = f"Planos alimentares prazerosos, personalizados e sem radicalismos para você atingir seu peso ideal com saúde e vitalidade em {cidade}."
+        titulo = f"Alimentação Equilibrada e Energia na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "costura":
+        badge = f"Ateliê de Costura & Alta Costura no {bairro}"
+        desc = f"Costura refinada, ajustes impecáveis e peças sob medida feitas com dedicação e carinho para valorizar sua elegância em {cidade}."
+        titulo = f"Ajustes Precisos e Caimento Perfeito na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
+    elif chave == "tecnologia":
+        badge = f"Tecnologia & Inovação no {bairro}"
+        desc = f"Manutenção de computadores, suporte de TI ágil e soluções tecnológicas sob medida para sua empresa ou residência em {cidade}."
+        titulo = f"Soluções Digitais e Suporte Especializado na <span class=\"text-[var(--color-400)]\">{empresa}</span>"
     else:
         badge = f"Referência em {nicho} no {bairro}"
         desc = f"Conheça o padrão de qualidade que conquistou nota {nota} estrelas no Google em {cidade}. Agende ou tire dúvidas diretamente pelo WhatsApp."
@@ -354,90 +398,82 @@ def gerar_cards_servicos(nicho: str, empresa: str = ""):
     """Gera layout Bento Grid de alta conversão para serviços em TODOS os nichos."""
     chave = identificar_nicho_chave(nicho, empresa)
     
-    if chave == "odontologia":
-        s1 = ("fa-tooth", "Clareamento & Estética Dental", "Técnicas modernas para devolver a harmonia, clareza e beleza natural do seu sorriso com total conforto.", ["Procedimento rápido e indolor", "Tecnologia de clareamento a laser", "Planejamento digital do sorriso"])
-        s2 = ("fa-teeth-open", "Implantes & Próteses Fixas", "Recupere sua mastigação e autoconfiança com procedimentos seguros e materiais de alto padrão.")
-        s3 = ("fa-shield-heart", "Prevenção & Cuidados Gerais", "Check-up completo, profilaxia detalhada e orientações de saúde bucal para toda a família.")
-    elif chave == "psicologia":
-        s1 = ("fa-brain", "Psicoterapia Individual & Saúde Emocional", "Espaço acolhedor e seguro para trabalhar ansiedade, estresse, autoconhecimento e desenvolvimento pessoal com total sigilo ético.", ["Sessões presenciais e online", "Abordagem humanizada e acolhedora", "Sigilo e ética profissional"])
-        s2 = ("fa-heart-pulse", "Terapia Cognitivo-Comportamental", "Metodologia estruturada para identificação de padrões, superação de bloqueios e inteligência emocional.")
-        s3 = ("fa-handshake-angle", "Acolhimento Terapêutico & Escuta Atenta", "Atendimento sensível e empático no seu ritmo, construindo ferramentas práticas para sua qualidade de vida.")
-    elif chave == "estética":
-        s1 = ("fa-wand-magic-sparkles", "Harmonização & Rejuvenescimento", "Realce seus traços e beleza natural com procedimentos minimamente invasivos de alta precisão e segurança.", ["Bioestimuladores de colágeno", "Toxina botulínica e preenchimento", "Resultados elegantes e naturais"])
-        s2 = ("fa-spa", "Limpeza de Pele Profunda & Peeling", "Desintoxicação dérmica, renovação celular e controle de oleosidade com dermocosméticos selecionados.")
-        s3 = ("fa-gem", "Protocolos Corporais & Drenagem", "Tecnologias avançadas para remodelagem corporal, melhora da circulação e firmeza da pele.")
-    elif chave == "clinica":
-        s1 = ("fa-stethoscope", "Consultas Médicas & Especialidades", "Avaliação clínica completa com corpo médico experiente, diagnóstico seguro e ambiente acolhedor.", ["Equipe dedicada e atenciosa", "Estrutura moderna e confortável", "Orientações preventivas contínuas"])
-        s2 = ("fa-heart-pulse", "Exames Diagnósticos & Rotina", "Agilidade na realização de procedimentos para você iniciar seu tratamento sem esperas desnecessárias.")
-        s3 = ("fa-user-doctor", "Acompanhamento Terapêutico & Saúde Integrada", "Planos de cuidado contínuo para garantir sua disposição e qualidade de vida permanente.")
-    elif chave == "salao":
-        s1 = ("fa-scissors", "Mechas, Coloração & Iluminação Capilar", "Técnicas exclusivas de morena iluminada, loiros perfeitos e correção de cor preservando a saúde do fio.", ["Preservação da fibra capilar", "Produtos de linhas profissionais", "Personalização para seu tom de pele"])
-        s2 = ("fa-spray-can-sparkles", "Cronograma Capilar & Tratamentos de Luxo", "Nutrição profunda, cauterização e reconstrução celular para fios radiantes e sedosos.")
-        s3 = ("fa-wand-magic", "Cortes Femininos & Visagismo Personalizado", "Harmonização facial completa valorizando seu estilo, movimento natural e textura dos fios.")
-    elif chave == "barbearia":
-        s1 = ("fa-scissors", "Corte Degradê & Fade de Alta Precisão", "Acabamento navalhado impecável, tesoura precisa e alinhamento milimétrico para o visual perfeito.", ["Pomadas e finalizadores premium", "Navalha descartável esterilizada", "Atendimento pontual sem filas"])
-        s2 = ("fa-soap", "Barboterapia com Toalha Quente & Ozônio", "Experiência relaxante com esfoliação, hidratação profunda e desenho milimétrico da barba.")
-        s3 = ("fa-shield-halved", "Acabamento, Pigmentação & Sobrancelha", "Alinhamento de contornos, camuflagem de falhas e cuidados masculinos de alto nível.")
-    elif chave == "advocacia":
-        s1 = ("fa-scale-balanced", "Direito Civil & Proteção Patrimonial Familiar", "Planejamento sucessório, inventários e soluções ágeis para resguardar a tranquilidade da sua família.", ["Atendimento consultivo especializado", "Defesa técnica rigorosa", "Comunicação clara e transparente"])
-        s2 = ("fa-briefcase", "Assessoria Trabalhista & Negócios", "Conformidade integral com as normas legais e atuação preventiva para resguardo de direitos.")
-        s3 = ("fa-handshake", "Contratos & Resolução Estratégica", "Elaboração e análise técnica detalhada com cláusulas protetivas personalizadas.")
+    if chave == "loja":
+        s1 = ("fa-bag-shopping", "Coleção Exclusiva & Novidades da Estação", "Peças selecionadas alinhadas às maiores tendências de estilo, conforto e durabilidade.", ["Produtos de alta durabilidade e estilo", "Envio rápido ou retirada em loja", "Atendimento humanizado via WhatsApp"])
+        s2 = ("fa-shirt", "Lookbooks & Combinações Completas", "Sugestões de looks prontos para você arrasar em qualquer ocasião com elegância.")
+        s3 = ("fa-gift", "Embalagens para Presente & Linha Premium", "Opções sofisticadas com atendimento consultivo para você acertar no presente ideal.")
+    elif chave == "delivery":
+        s1 = ("fa-motorcycle", "Delivery Expresso & Pratos Artesanais", "Peça seus pratos favoritos e receba na sua casa quentinho, com embalagem inviolável e rapidez.", ["Ingredientes frescos e selecionados", "Embalagem térmica selada", "Rastreamento do pedido pelo WhatsApp"])
+        s2 = ("fa-burger", "Combos Especiais & Porções da Casa", "Combinações perfeitas para compartilhar com a família ou amigos com o melhor custo-benefício.")
+        s3 = ("fa-receipt", "Cardápio Digital & Pedido Sem Espera", "Faça seu pedido diretamente pelo link ou WhatsApp em poucos segundos sem burocracia.")
     elif chave == "restaurante":
         s1 = ("fa-utensils", "Pratos Autorais & Gastronomia Especial", "Ingredientes selecionados e receitas elaboradas para proporcionar uma experiência de sabor inesquecível.", ["Ingredientes frescos e selecionados", "Ambiente climatizado e acolhedor", "Cardápio com opções variadas"])
         s2 = ("fa-bowl-food", "Almoço Executivo & Massas Especiais", "Opções saborosas e balanceadas preparadas diariamente pelo nosso chef para o seu dia a dia.")
         s3 = ("fa-wine-glass", "Sobremesas Artesanais & Carta de Bebidas", "Finalize sua refeição com doces finos, cafés especiais e bebidas harmonizadas.")
-    elif chave == "pizzaria":
-        s1 = ("fa-pizza-slice", "Pizzas Artesanais de Fermentação Lenta", "Massa leve de longa fermentação, molho de tomate fresco e queijos selecionados assados na perfeição.", ["Massa de digestão leve", "Recheios nobres e generosos", "Entrega rápida e quentinha"])
-        s2 = ("fa-fire-burner", "Bordas Especiais Recheadas", "Catupiry original, cheddar cremoso e bordas vulcão crocantes para elevar o sabor.")
-        s3 = ("fa-box-open", "Combos Especiais & Pizzas Doces", "Combinações com refrigerante e sobremesas irresistíveis com chocolate nobre e frutas frescas.")
-    elif chave == "hamburgueria":
-        s1 = ("fa-burger", "Burgers Artesanais com Blends Especiais", "Carne fresca grelhada no ponto certo, queijos derretidos e pães artesanais selados na manteiga.", ["Carne 100% fresca e selecionada", "Maioneses e molhos autorais", "Pão brioche fofinho e selado"])
-        s2 = ("fa-fire", "Batatas Rústicas Crocantes & Petiscos", "Porções generosas temperadas com ervas finas, cheddar cremoso e bacon crocante.")
-        s3 = ("fa-mug-saucer", "Milkshakes Cremosos & Bebidas Artesanais", "Sobremesas irresistíveis com sorvete artesanal, calda quente e recheios especiais.")
-    elif chave == "cafeteria":
-        s1 = ("fa-mug-hot", "Cafés Especiais Filtrados & Espresso de Origem", "Grãos selecionados com notas sensoriais únicas, extraídos com maestria por baristas dedicados.", ["Grãos 100% arábica selecionados", "Métodos de extração artesanais", "Ambiente agradável com Wi-Fi"])
-        s2 = ("fa-bread-slice", "Brunch Completo, Tostas & Salgados Nobres", "Pães artesanais de fermentação natural, croissants folhados e quiches assados no dia.")
-        s3 = ("fa-cake-candles", "Confeitaria Fina, Bolos & Tortas Artesanais", "Fatias generosas, doces autorais e combinações perfeitas para acompanhar seu café.")
-    elif chave == "academia":
-        s1 = ("fa-dumbbell", "Musculação & Treinamento de Alta Performance", "Maquinário moderno, biomecânica precisa e suporte contínuo de instrutores para alcançar suas metas.", ["Equipamentos modernos e ergonômicos", "Ambiente climatizado e motivador", "Acompanhamento profissional"])
-        s2 = ("fa-person-running", "Aulas Coletivas, Funcional & Cárdio", "Treinos dinâmicos para queima calórica, aumento de fôlego, agilidade e condicionamento integral.")
-        s3 = ("fa-clipboard-check", "Avaliação Física & Treinos Personalizados", "Bioimpedância completa e periodização de treinos alinhada aos seus objetivos pessoais.")
-    elif chave in ["veterinaria", "petshop"]:
-        s1 = ("fa-paw", "Banho, Tosa Especializada & Estética Pet", "Higiene carinhosa com produtos dermatológicos hipoalergênicos, tosa na tesoura e hidratação.", ["Profissionais carinhosos e pacientes", "Produtos hipoalergênicos seguros", "Ambiente higienizado e tranquilo"])
-        s2 = ("fa-shield-dog", "Consultas Veterinárias & Vacinação Importada", "Acompanhamento clínico preventivo, diagnóstico seguro e imunização completa para seu pet.")
-        s3 = ("fa-bag-shopping", "Farmácia Veterinária & Rações Super Premium", "Medicamentos originais, alimentação especializada e acessórios para o bem-estar animal.")
+    elif chave == "sorveteria":
+        s1 = ("fa-ice-cream", "Gelatos Artesanais & Sabores Nobres", "Textura supercremosa, ingredientes nobres e receitas autênticas italianas feitas diariamente.", ["Frutas frescas selecionadas", "Opções zero açúcar e sem lactose", "Casquinhas crocantes artesanais"])
+        s2 = ("fa-bowl-rice", "Açaí Especial com Toppings Ilimitados", "Açaí cremoso de altíssima pureza acompanhado de frutas, cremes artesanais e coberturas crocantes.")
+        s3 = ("fa-box-open", "Potes para Viagem & Sobremesas Geladas", "Leve o melhor sabor para casa com potes térmicos lacrados e tortas de gelato exclusivas.")
     elif chave == "oficina":
         s1 = ("fa-wrench", "Revisão Preventiva & Injeção Eletrônica", "Diagnóstico computadorizado de precisão para garantir a segurança e a potência original do seu carro.", ["Scanner automotivo de última geração", "Peças com garantia comprovada", "Orçamento detalhado e transparente"])
         s2 = ("fa-oil-can", "Troca de Óleo, Filtros & Fluidos", "Lubrificantes recomendados pela montadora para máxima durabilidade do motor e economia.")
         s3 = ("fa-car-burst", "Suspensão, Freios & Alinhamento 3D", "Manutenção preventiva de freios, amortecedores e geometria com tecnologia digital.")
+    elif chave == "clinica":
+        s1 = ("fa-stethoscope", "Consultas Médicas & Especialidades", "Avaliação clínica completa com corpo médico experiente, diagnóstico seguro e ambiente acolhedor.", ["Equipe dedicada e atenciosa", "Estrutura moderna e confortável", "Orientações preventivas contínuas"])
+        s2 = ("fa-heart-pulse", "Exames Diagnósticos & Rotina", "Agilidade na realização de procedimentos para você iniciar seu tratamento sem esperas desnecessárias.")
+        s3 = ("fa-user-doctor", "Acompanhamento Terapêutico & Saúde Integrada", "Planos de cuidado contínuo para garantir sua disposição e qualidade de vida permanente.")
+    elif chave == "psicologia":
+        s1 = ("fa-brain", "Psicoterapia Individual & Saúde Emocional", "Espaço acolhedor e seguro para trabalhar ansiedade, estresse, autoconhecimento e desenvolvimento pessoal com total sigilo ético.", ["Sessões presenciais e online", "Abordagem humanizada e acolhedora", "Sigilo e ética profissional"])
+        s2 = ("fa-heart-pulse", "Terapia Cognitivo-Comportamental", "Metodologia estruturada para identificação de padrões, superação de bloqueios e inteligência emocional.")
+        s3 = ("fa-handshake-angle", "Acolhimento Terapêutico & Escuta Atenta", "Atendimento sensível e empático no seu ritmo, construindo ferramentas práticas para sua qualidade de vida.")
+    elif chave == "petshop":
+        s1 = ("fa-paw", "Banho, Tosa Especializada & Estética Pet", "Higiene carinhosa com produtos dermatológicos hipoalergênicos, tosa na tesoura e hidratação.", ["Profissionais carinhosos e pacientes", "Produtos hipoalergênicos seguros", "Ambiente higienizado e tranquilo"])
+        s2 = ("fa-shield-dog", "Consultas Veterinárias & Vacinação Importada", "Acompanhamento clínico preventivo, diagnóstico seguro e imunização completa para seu pet.")
+        s3 = ("fa-bag-shopping", "Rações Super Premium & Farmácia Pet", "Medicamentos originais, alimentação especializada e acessórios para o bem-estar do seu bichinho.")
+    elif chave == "advocacia":
+        s1 = ("fa-scale-balanced", "Direito Civil & Proteção Patrimonial Familiar", "Planejamento sucessório, inventários e soluções ágeis para resguardar a tranquilidade da sua família.", ["Atendimento consultivo especializado", "Defesa técnica rigorosa", "Comunicação clara e transparente"])
+        s2 = ("fa-briefcase", "Assessoria Trabalhista & Negócios", "Conformidade integral com as normas legais e atuação preventiva para resguardo de direitos.")
+        s3 = ("fa-handshake", "Contratos & Resolução Estratégica", "Elaboração e análise técnica detalhada com cláusulas protetivas personalizadas.")
+    elif chave == "odontologia":
+        s1 = ("fa-tooth", "Clareamento & Estética Dental", "Técnicas modernas para devolver a harmonia, clareza e beleza natural do seu sorriso com total conforto.", ["Procedimento rápido e indolor", "Tecnologia de clareamento a laser", "Planejamento digital do sorriso"])
+        s2 = ("fa-teeth-open", "Implantes & Próteses Fixas", "Recupere sua mastigação e autoconfiança com procedimentos seguros e materiais de alto padrão.")
+        s3 = ("fa-shield-heart", "Prevenção & Cuidados Gerais", "Check-up completo, profilaxia detalhada e orientações de saúde bucal para toda a família.")
+    elif chave == "construcao":
+        s1 = ("fa-trowel-bricks", "Reformas Residenciais & Comerciais Completas", "Execução segura desde a fundação até o acabamento fino com controle rigoroso de custos e cronograma.", ["Contrato com prazos garantidos", "Equipe técnica qualificada", "Acabamento refinado de alto nível"])
+        s2 = ("fa-paint-roller", "Pinturas Especiais, Drywall & Elétrica", "Instalações modernas com normas de segurança ABNT e acabamentos sofisticados sem retrabalho.")
+        s3 = ("fa-helmet-safety", "Gerenciamento de Obras & Projetos Estruturais", "Acompanhamento profissional contínuo eliminando desperdício de materiais e dores de cabeça.")
     elif chave == "imobiliaria":
         s1 = ("fa-building", "Venda de Imóveis Residenciais & Alto Padrão", "Casas, apartamentos e condomínios selecionados com documentação 100% regularizada e assessoria integral.", ["Assessoria jurídica imobiliária", "Fotos e vídeos profissionais", "Atendimento personalizado e ágil"])
         s2 = ("fa-key", "Locação Ágil com Garantia Digital", "Alugue seu imóvel sem burocracia, fiador tradicional ou complicações em cartório.")
         s3 = ("fa-file-signature", "Avaliação Imobiliária de Precisão", "Análise mercadológica criteriosa para compra, venda e investimentos seguros na região.")
-    elif chave == "arquitetura":
-        s1 = ("fa-compass-drafting", "Projetos Arquitetônicos & Comerciais", "Planejamento inteligente do espaço unindo beleza estética, ventilação natural, funcionalidade e conforto.", ["Projetos executivos detalhados", "Imagens 3D realistas dos ambientes", "Otimização de custos na obra"])
-        s2 = ("fa-couch", "Design de Interiores & Consultoria de Espaços", "Harmonização de texturas, móveis planejados, iluminação cenográfica e materiais nobres.")
-        s3 = ("fa-helmet-safety", "Gerenciamento e Acompanhamento de Obras", "Controle rigoroso de prazos, equipe técnica qualificada e conformidade com o projeto.")
-    elif chave == "contabilidade":
-        s1 = ("fa-calculator", "Assessoria Contábil & Gestão Tributária", "Contabilidade consultiva que reduz impostos legalmente e organiza as finanças da sua empresa.", ["Planejamento tributário estratégico", "Atendimento digital sem papelada", "Segurança fiscal e conformidade"])
-        s2 = ("fa-file-invoice-dollar", "Abertura Ágil & Regularização de Empresas", "Formalização completa de CNPJs, enquadramento no regime tributário ideal e alvarás.")
-        s3 = ("fa-chart-pie", "BPO Financeiro & Folha de Pagamento", "Terceirização do contas a pagar, faturamento e gestão trabalhista para você focar no negócio.")
-    elif chave == "tatuagem":
-        s1 = ("fa-pen-nib", "Tatuagens Autorais, Fineline & Realismo", "Projetos exclusivos desenvolvidos sob medida na sua pele com traços ultrafinos e pigmentos importados.", ["Materiais 100% descartáveis e estéreis", "Desenhos autorais e exclusivos", "Ambiente higienizado e acolhedor"])
-        s2 = ("fa-paintbrush", "Coberturas (Cover-up) & Restaurações", "Revitalização e cobertura estética impecável de tatuagens antigas com harmonia anatômica.")
-        s3 = ("fa-ring", "Body Piercing & Joalheria em Titânio", "Perfurações com técnicas assépticas, biojoias de grau cirúrgico e cicatrização acelerada.")
-    elif chave == "otica":
-        s1 = ("fa-glasses", "Lentes Digitais de Alta Definição & Filtro Azul", "Proteção contra cansaço visual de telas, nitidez periférica e tecnologia antirreflexo premium.", ["Conferência precisa da prescrição médica", "Garantia de adaptação da lente", "Ajuste anatômico ao seu rosto"])
-        s2 = ("fa-eye", "Armações de Grifes Internacionais & Nacionais", "Modelos modernos em acetato nobre, titânio ultraleve e designs clássicos para seu estilo.")
-        s3 = ("fa-screwdriver-wrench", "Manutenção Especializada & Ajuste Gratuito", "Limpeza ultrassônica, alinhamento de plaquetas e substituição de parafusos com precisão.")
-    elif chave == "fisioterapia":
-        s1 = ("fa-person-walking", "Fisioterapia Ortopédica & Reabilitação", "Tratamento eficaz para alívio de dores articulares, lesões musculares e recuperação pós-cirúrgica.", ["Avaliação funcional detalhada", "Planos de tratamento personalizados", "Técnicas modernas sem dor"])
-        s2 = ("fa-spa", "Pilates Clínico & Reeducação Postural (RPG)", "Fortalecimento do core, ganho de flexibilidade e alinhamento postural com aparelhos dedicados.")
-        s3 = ("fa-hand-dots", "Terapia Manual & Alívio de Dores Crônicas", "Liberação miofascial, manipulação articular e mobilização para devolver seu movimento livre.")
-    elif chave == "loja":
-        s1 = ("fa-bag-shopping", "Coleção Exclusiva & Novidades da Estação", "Peças selecionadas alinhadas às maiores tendências de estilo, conforto e durabilidade.", ["Produtos de alta durabilidade e estilo", "Envio rápido ou retirada em loja", "Atendimento humanizado via WhatsApp"])
-        s2 = ("fa-shirt", "Lookbooks & Combinações Completas", "Sugestões de looks prontos para você arrasar em qualquer ocasião com elegância.")
-        s3 = ("fa-gift", "Embalagens para Presente & Linha Premium", "Opções sofisticadas com atendimento consultivo para você acertar no presente ideal.")
+    elif chave == "seguros":
+        s1 = ("fa-shield-halved", "Seguro Auto & Assistência 24 Horas", "Cobertura completa contra colisões, furto, terceiros e guincho com as maiores seguradoras do país.", ["Cotação comparativa em minutos", "Atendimento 24h em sinistros", "Condições personalizadas para você"])
+        s2 = ("fa-house-circle-check", "Seguro Residencial & Empresarial", "Proteção essencial para seu imóvel, maquinário e patrimônio contra imprevistos climáticos e furtos.")
+        s3 = ("fa-heart-pulse", "Seguro de Vida & Previdência Privada", "Segurança financeira planejada para sua família e planos sob medida para seu futuro tranquilo.")
+    elif chave == "autonomo":
+        s1 = ("fa-screwdriver-wrench", "Atendimento Rápido & Diagnóstico Preciso", "Resolução técnica ágil e limpa para suas demandas residenciais ou comerciais com garantia comprovada.", ["Orçamento claro e sem surpresas", "Ferramentas profissionais modernas", "Garantia formal do serviço prestado"])
+        s2 = ("fa-clock", "Pontualidade & Agendamento Flexível", "Horários que se adaptam à sua rotina com atendimento prioritário para situações emergenciais.")
+        s3 = ("fa-thumbs-up", "Qualidade Comprovada & Confiança", "Mais de centenas de atendimentos realizados na região com alto índice de satisfação comprovada.")
+    elif chave == "pessoal":
+        s1 = ("fa-user-tie", "Consultoria Individual & Mentorias", "Metodologia prática e focada no desenvolvimento de soluções sob medida para suas necessidades e metas.", ["Metodologia comprovada na prática", "Acompanhamento individualizado", "Resultados mensuráveis"])
+        s2 = ("fa-folder-open", "Portfólio de Cases & Resultados", "Conheça os projetos concluídos com sucesso e a transformação gerada para clientes e parceiros.")
+        s3 = ("fa-microphone", "Palestras, Workshops & Treinamentos", "Conteúdos dinâmicos e de alto impacto para eventos, equipes e encontros profissionais.")
+    elif chave == "fitness":
+        s1 = ("fa-dumbbell", "Musculação & Treinamento de Alta Performance", "Maquinário moderno, biomecânica precisa e suporte contínuo de instrutores para alcançar suas metas.", ["Equipamentos modernos e ergonômicos", "Ambiente climatizado e motivador", "Acompanhamento profissional"])
+        s2 = ("fa-person-running", "Aulas Coletivas, Funcional & Cárdio", "Treinos dinâmicos para queima calórica, aumento de fôlego, agilidade e condicionamento integral.")
+        s3 = ("fa-clipboard-check", "Avaliação Física & Treinos Personalizados", "Bioimpedância completa e periodização de treinos alinhada aos seus objetivos pessoais.")
+    elif chave == "nutricao":
+        s1 = ("fa-apple-whole", "Reeducação Alimentar & Emagrecimento Saudável", "Planejamento nutricional flexível que cabe na sua rotina real, sem fórmulas prontas ou restrições severas.", ["Cardápios adaptados ao seu gosto", "Acompanhamento contínuo via WhatsApp", "Avaliação por bioimpedância completa"])
+        s2 = ("fa-chart-line", "Nutrição Esportiva & Ganho de Massa", "Estratégias específicas para potencializar seu rendimento no treino e acelerar a recuperação muscular.")
+        s3 = ("fa-seedling", "Saúde Intestinal & Longevidade", "Manejo nutricional focado em reduzir inflamações, melhorar o sono e aumentar a disposição diária.")
+    elif chave == "costura":
+        s1 = ("fa-scissors", "Ajustes Finos & Reformas de Roupas", "Barras originais, ajustes de cintura, ombros e reformas completas com acabamento idêntico ao de fábrica.", ["Acabamento artesanal impecável", "Pontualidade rigorosa na entrega", "Prova presencial com ajustes na hora"])
+        s2 = ("fa-vest-patches", "Confecção Sob Medida & Roupas de Festa", "Vestidos, ternos e conjuntos modelados exclusivamente para o seu corpo com tecidos nobres.")
+        s3 = ("fa-needle", "Customização & Transformação de Peças", "Modernize peças antigas do seu guarda-roupa com novas modelagens e detalhes exclusivos.")
+    elif chave == "tecnologia":
+        s1 = ("fa-laptop-code", "Assistência Técnica & Upgrade de Computadores", "Diagnóstico avançado, formatação rápida, limpeza física e upgrade de SSD/memória para alta velocidade.", ["Peças originais com garantia", "Atendimento rápido sem perda de dados", "Laboratório técnico especializado"])
+        s2 = ("fa-network-wired", "Redes, Wi-Fi & Infraestrutura de TI", "Instalação e otimização de roteadores, cabeamento estruturado e segurança para empresas e lares.")
+        s3 = ("fa-shield-halved", "Segurança Digital & Recuperação de Dados", "Backup em nuvem, remoção de vírus e proteção integral contra ameaças virtuais para sua tranquilidade.")
     else:
         s1 = ("fa-star", "Atendimento Personalizado & Sob Medida", "Metodologia exclusiva focada em entregar a melhor solução para sua necessidade.", ["Padrão de qualidade superior", "Atendimento ágil e pontual", "Satisfação garantida"])
         s2 = ("fa-award", "Profissionais Capacitados", "Equipe experiente e preparada para atender com máxima atenção a você.")
@@ -806,7 +842,9 @@ def gerar_sites(leads):
         foto_hero_real = lead.get("foto_hero") if (lead.get("foto_hero") and not any(b in lead.get("foto_hero") for b in padroes_avatar)) else ""
         foto_sec_real = lead.get("foto_secundaria") if (lead.get("foto_secundaria") and not any(b in lead.get("foto_secundaria") for b in padroes_avatar)) else ""
         
-        hero_img = foto_hero_real or (fotos_validas[0] if fotos_validas else img_pack["hero"])
+        # Arte vetorial nativa em SVG para hero caso não haja foto autêntica do Google Maps (zero banco de imagens genérico/fake)
+        fallback_svg_hero = gerar_svg_hero(nicho_chave, empresa)
+        hero_img = foto_hero_real or (fotos_validas[0] if fotos_validas else fallback_svg_hero)
         sec_img = foto_sec_real or (fotos_validas[1] if len(fotos_validas) > 1 else img_pack["secundaria"])
         
         # 4. Links WhatsApp e Google Maps

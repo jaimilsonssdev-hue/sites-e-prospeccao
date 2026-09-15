@@ -479,6 +479,46 @@ def gerar_cards_servicos(nicho: str, empresa: str = ""):
         s2 = ("fa-award", "Profissionais Capacitados", "Equipe experiente e preparada para atender com máxima atenção a você.")
         s3 = ("fa-clock-rotate-left", "Pontualidade & Compromisso", "Respeito rigoroso aos seus horários e atendimento prioritário via WhatsApp.")
 
+    # Configuração de Botão e Subtítulo dinâmico por categoria de nicho
+    if chave in ["loja", "delivery", "sorveteria", "restaurante", "petshop"]:
+        if chave == "sorveteria":
+            btn_cta = "Fazer Pedido no WhatsApp"
+            sub_cta = "Pronto para entrega ou retirada rápida"
+        elif chave == "delivery":
+            btn_cta = "Fazer Pedido no Delivery"
+            sub_cta = "Entrega rápida na sua casa"
+        elif chave == "restaurante":
+            btn_cta = "Ver Cardápio & Fazer Pedido"
+            sub_cta = "Pratos frescos e reservas"
+        elif chave == "loja":
+            btn_cta = "Comprar pelo WhatsApp"
+            sub_cta = "Atendimento direto com vendedora"
+        else: # petshop
+            btn_cta = "Fazer Pedido no WhatsApp"
+            sub_cta = "Produtos e agendamento pet"
+    elif chave in ["clinica", "odontologia", "psicologia", "nutricao", "fitness"]:
+        if chave in ["psicologia", "terapeuta"]:
+            btn_cta = "Agendar Sessão Terapêutica"
+            sub_cta = "Atendimento presencial ou online com sigilo ético"
+        elif chave == "odontologia":
+            btn_cta = "Agendar Avaliação Odontológica"
+            sub_cta = "Atendimento personalizado com hora marcada"
+        elif chave == "nutricao":
+            btn_cta = "Agendar Consulta Nutricional"
+            sub_cta = "Plano individualizado com acompanhamento"
+        elif chave == "fitness":
+            btn_cta = "Agendar Aula Experimental"
+            sub_cta = "Treinos personalizados com instrutor"
+        else:
+            btn_cta = "Agendar Consulta Médica"
+            sub_cta = "Atendimento com hora marcada"
+    elif chave == "costura":
+        btn_cta = "Solicitar Ajuste no WhatsApp"
+        sub_cta = "Atendimento personalizado no ateliê"
+    else:
+        btn_cta = "Solicitar Orçamento no WhatsApp"
+        sub_cta = "Orçamento rápido sem compromisso"
+
     # Bento Grid HTML
     bento_html = f"""
     <!-- Card 1 (Destaque Principal - Bento Grid Span 2) -->
@@ -518,9 +558,9 @@ def gerar_cards_servicos(nicho: str, empresa: str = ""):
         <a href="{{{{WHATSAPP_LINK}}}}" target="_blank" 
            class="inline-flex items-center gap-2 text-sm font-bold text-white bg-[var(--color-600)] hover:bg-[var(--color-700)] px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all">
           <i class="fa-brands fa-whatsapp text-emerald-300"></i>
-          <span>Agendar este Procedimento</span>
+          <span>{btn_cta}</span>
         </a>
-        <span class="text-xs text-gray-500 font-medium">Atendimento com hora marcada</span>
+        <span class="text-xs text-gray-500 font-medium">{sub_cta}</span>
       </div>
     </div>
 
